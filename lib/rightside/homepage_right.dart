@@ -2,6 +2,7 @@ import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
 
+import '../bloc/livelocation/speed_bloc.dart';
 import '../constant/constant.dart';
 
 class HomepageRight extends StatelessWidget {
@@ -24,7 +25,7 @@ class HomepageRight extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "state.durakAdi,",
+                "durak",
                 style: Constant.ledTextStyle,
               )),
           Padding(
@@ -104,12 +105,11 @@ class HomepageRight extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "70 KM",
-              style: Constant.ledTextStyle,
-            ),
-          ),
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "70",
+                style: Constant.ledTextStyle,
+              )),
           const Divider(
             color: Colors.white,
             thickness: 1,
@@ -123,9 +123,30 @@ class HomepageRight extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "100 M",
-              style: Constant.ledTextStyle,
+            child: BlocBuilder<SpeedLocationBloc, SpeedLocationState>(
+              builder: (context, state) {
+                if (state is SpeedlocationLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is SpeedLocationLoaded) {
+                  try {
+                    return Center(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(state.position.toString(),
+                            style: Constant.ledTextStyle),
+                      ],
+                    ));
+                  } catch (e) {
+                    return Text(e.toString());
+                  }
+                } else {
+                  return const Text("");
+                }
+              },
             ),
           ),
         ],

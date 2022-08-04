@@ -1,7 +1,8 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:metrobusnerede/constant/constant.dart';
-import '../constant/color.dart';
+
+import '../../constant/color.dart';
+import '../constant/constant.dart';
 import '../cubit/list_cubit.dart';
 import '../models/busStop.dart';
 

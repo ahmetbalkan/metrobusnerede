@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
-import 'Homepage_widget.dart';
-import 'constant/color.dart';
+import 'bloc/livelocation/speed_bloc.dart';
 import 'cubit/list_cubit.dart';
-import 'locator.dart';
+import 'homepage.dart';
 
 void main() {
-  locatorMethod();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: backgroundColor,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.dark,
-      systemNavigationBarColor: backgroundColor,
-      systemNavigationBarIconBrightness: Brightness.dark));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -32,9 +23,9 @@ class MyApp extends StatelessWidget {
               BlocProvider<ListCubit>(
                 create: (BuildContext context) => ListCubit(),
               ),
-              BlocProvider<LivelocationBloc>(
-                create: (BuildContext context) => LivelocationBloc(),
-              ),
+              BlocProvider<SpeedLocationBloc>(
+                  create: (BuildContext context) =>
+                      SpeedLocationBloc()..add(LoadSpeedEvent())),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -43,7 +34,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Armata',
                 primarySwatch: Colors.blue,
               ),
-              home: const MyHomePage(),
+              home: const HomePage(),
             ),
           );
         });

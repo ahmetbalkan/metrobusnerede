@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'package:location/location.dart' as loc;
 
-import '../models/busStop.dart';
+import 'package:metrobusnerede/models/busStop.dart';
 
 class LocationRepository {
-  final loc.Location location = loc.Location();
-  StreamSubscription<loc.LocationData>? _locationSubscription;
-
   Future<List<busStop>> BusStopList() async {
     List<busStop> busStopList = [];
     busStopList.add(busStop(0, "B.DUZU SONDURAK", 41.022019, 28.625050, 168));
