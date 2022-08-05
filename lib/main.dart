@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'bloc/livelocation/speed_bloc.dart';
+import 'package:metrobusnerede/bloc/currentstop/bloc/current_stop_bloc.dart';
+import 'bloc/speed/speed_bloc.dart';
 import 'cubit/list_cubit.dart';
 import 'homepage.dart';
 
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
               BlocProvider<SpeedLocationBloc>(
                   create: (BuildContext context) =>
                       SpeedLocationBloc()..add(LoadSpeedEvent())),
+              BlocProvider<CurrentStopBloc>(
+                  create: (BuildContext context) =>
+                      CurrentStopBloc()..add(LoadCurrentStopEvent())),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

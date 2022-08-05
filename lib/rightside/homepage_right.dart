@@ -2,7 +2,7 @@ import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
 
-import '../bloc/livelocation/speed_bloc.dart';
+import '../bloc/speed/speed_bloc.dart';
 import '../constant/constant.dart';
 
 class HomepageRight extends StatelessWidget {

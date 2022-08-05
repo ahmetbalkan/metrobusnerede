@@ -27,13 +27,12 @@ class SpeedLocationBloc extends Bloc<SpeedLocationEvent, SpeedLocationState> {
               "Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.",
           title: "Metrobüs Nerede?");
       Location.instance.changeSettings(
-          accuracy: LocationAccuracy.high, distanceFilter: 10, interval: 100);
+          accuracy: LocationAccuracy.high, distanceFilter: 20, interval: 100);
       Location.instance.onLocationChanged.listen((event) {
         add(UpdateSpeedEvent(position: event));
       });
     });
     on<UpdateSpeedEvent>((event, emit) {
-      print(event.position.speed!.toInt());
       emit(SpeedLocationLoaded(position: event.position.speed!.toInt()));
     });
   }
