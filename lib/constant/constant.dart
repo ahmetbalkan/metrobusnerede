@@ -1,5 +1,6 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:metrobusnerede/constant/color.dart';
 
 class Constant {
   Constant._();
@@ -16,4 +17,14 @@ class Constant {
 
   static final ledTextStyle = TextStyle(
       fontSize: ScreenUtil().setSp(20), color: Colors.white, fontFamily: 'Led');
+  static final WayDialogBlackStyle = TextStyle(
+    fontSize: ScreenUtil().setSp(18),
+    color: Colors.black,
+    fontFamily: 'Armata',
+  );
+  static final WayDialogRedStyle = TextStyle(
+    fontSize: ScreenUtil().setSp(18),
+    color: backgroundColor,
+    fontFamily: 'Armata',
+  );
 }
