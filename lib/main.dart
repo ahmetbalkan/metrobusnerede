@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
+import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import 'Homepage_widget.dart';
 import 'bloc/next_stop/next_stop_bloc.dart';
 import 'constant/color.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider<ListCubit>(
                 create: (BuildContext context) => ListCubit(),
+              ),
+              BlocProvider<WayCounterBlocCubit>(
+                create: (BuildContext context) => WayCounterBlocCubit(),
               ),
               BlocProvider<LivelocationBloc>(
                   create: (BuildContext context) =>

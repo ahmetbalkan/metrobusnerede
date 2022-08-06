@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:flutter/Material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../constant/color.dart';
 import '../constant/constant.dart';
+import 'cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import 'leftside/homepage_left.dart';
 import 'rightside/homepage_right.dart';
 
@@ -160,7 +162,11 @@ class MyHomePage extends StatelessWidget {
                 Column(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        context.read<WayCounterBlocCubit>().Beylikduzu();
+                        print(context.read<WayCounterBlocCubit>().state.way);
+                        Navigator.pop(context);
+                      },
                       child: Container(
                         decoration: const BoxDecoration(
                             color: Colors.white,
@@ -192,7 +198,11 @@ class MyHomePage extends StatelessWidget {
                       height: 10,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        context.read<WayCounterBlocCubit>().SogutluCesme();
+                        print(context.read<WayCounterBlocCubit>().state.way);
+                        Navigator.pop(context);
+                      },
                       child: Container(
                         decoration: const BoxDecoration(
                             color: Colors.white,
