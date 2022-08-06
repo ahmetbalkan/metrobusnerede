@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:metrobusnerede/bloc/currentstop/bloc/current_stop_bloc.dart';
-import 'bloc/speed/speed_bloc.dart';
+import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
+import 'Homepage_widget.dart';
+import 'bloc/next_stop/next_stop_bloc.dart';
+import 'constant/color.dart';
 import 'cubit/list_cubit.dart';
-import 'homepage.dart';
+import 'locator.dart';
 
 void main() {
+  locatorMethod();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: backgroundColor,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.dark,
+      systemNavigationBarColor: backgroundColor,
+      systemNavigationBarIconBrightness: Brightness.dark));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -24,12 +33,11 @@ class MyApp extends StatelessWidget {
               BlocProvider<ListCubit>(
                 create: (BuildContext context) => ListCubit(),
               ),
-              BlocProvider<SpeedLocationBloc>(
+              BlocProvider<LivelocationBloc>(
                   create: (BuildContext context) =>
-                      SpeedLocationBloc()..add(LoadSpeedEvent())),
-              BlocProvider<CurrentStopBloc>(
-                  create: (BuildContext context) =>
-                      CurrentStopBloc()..add(LoadCurrentStopEvent())),
+                      LivelocationBloc()..add(LoadLocationEvent())),
+              BlocProvider<NextStopBloc>(
+                  create: (BuildContext context) => NextStopBloc()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -38,7 +46,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Armata',
                 primarySwatch: Colors.blue,
               ),
-              home: const HomePage(),
+              home: const MyHomePage(),
             ),
           );
         });
