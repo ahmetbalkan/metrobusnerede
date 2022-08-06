@@ -9,7 +9,8 @@ abstract class NextStopEvent extends Equatable {
 
 class UpdateNextStopEvent extends NextStopEvent {
   final LocationData position;
-  const UpdateNextStopEvent({required this.position});
+  final int way;
+  const UpdateNextStopEvent({required this.position, required this.way});
   @override
   List<Object> get props => [position];
 }

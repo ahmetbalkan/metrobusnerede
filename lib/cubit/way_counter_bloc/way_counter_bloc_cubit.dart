@@ -7,10 +7,10 @@ class WayCounterBlocCubit extends Cubit<WayCounterBlocState> {
   WayCounterBlocCubit() : super(WayCounterBlocInitial(Firstway: 0));
 
   void Beylikduzu() {
-    emit(WayCounterState(CounterWay: state.way + 1));
+    emit(WayCounterState(CounterWay: 1));
   }
 
   void SogutluCesme() {
-    emit(WayCounterState(CounterWay: state.way - 1));
+    emit(WayCounterState(CounterWay: 0));
   }
 }

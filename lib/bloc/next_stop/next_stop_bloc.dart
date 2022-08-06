@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:location_distance_calculator/location_distance_calculator.dart';
+import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import 'package:metrobusnerede/location.dart';
 import 'dart:math';
 import '../../models/busStop.dart';
@@ -14,23 +15,43 @@ class NextStopBloc extends Bloc<NextStopEvent, NextStopState> {
     final locationRepository = LocationRepository();
     List<busStop> busStoplist = [];
     List<double> distanceList = [];
-    int count, way = 0;
+    int count = 0;
+    int nearWay = 0;
     on<UpdateNextStopEvent>((event, emit) async {
       if (event != null) {
-        print(event.position.latitude);
         busStoplist = await locationRepository.BusStopList();
+        int way = event.way;
 
         for (var i = 0; i < busStoplist.length; i++) {
-          double distance = await calculateDistance(
+          if (count < 1) {
+            double distance = await calculateDistance(
+              event.position.latitude,
+              event.position.longitude,
               busStoplist[i].latitude,
               busStoplist[i].longitude,
-              event.position.latitude,
-              event.position.longitude);
-          distanceList.add(distance);
+            );
+            distanceList.add(distance);
+          }
         }
+        count++;
 
         double minDistance = await findMin(distanceList);
-        print("min dis " + minDistance.toString());
+
+        for (var i = 0; i < distanceList.length; i++) {
+          if (distanceList[i] == minDistance) {
+            double a = await calculateDistance(
+                event.position.latitude,
+                event.position.longitude,
+                busStoplist[i + 1].latitude,
+                busStoplist[i + 1].longitude);
+            print(a);
+            print(busStoplist[i + 1].name);
+          }
+        }
+
+        if (way == 0) {}
+
+        emit(MyNextStopState(NextStopValue: busStoplist[way].name));
         /*   for (int i = 0; i < busStoplist.length; i++) {
           double distance = await LocationDistanceCalculator().distanceBetween(
               busStoplist[i].latitude,

@@ -4,6 +4,7 @@ import 'package:metrobusnerede/constant/color.dart';
 import '../bloc/livelocation/livelocation_bloc.dart';
 import '../bloc/next_stop/next_stop_bloc.dart';
 import '../constant/constant.dart';
+import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 
 class HomepageRight extends StatelessWidget {
   HomepageRight({Key? key}) : super(key: key);
@@ -18,9 +19,9 @@ class HomepageRight extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (currentlocation is LivelocationLoaded) {
-          context
-              .read<NextStopBloc>()
-              .add(UpdateNextStopEvent(position: currentlocation.position));
+          context.read<NextStopBloc>().add(UpdateNextStopEvent(
+              position: currentlocation.position,
+              way: context.watch<WayCounterBlocCubit>().state.way));
           try {
             return Container(
               color: backgroundColor,
@@ -120,7 +121,7 @@ class HomepageRight extends StatelessWidget {
                     child: BlocBuilder<NextStopBloc, NextStopState>(
                       builder: (context, state) {
                         return Text(
-                          state.nextStop,
+                          currentlocation.position.speed!.toInt().toString(),
                           style: Constant.ledTextStyle,
                         );
                       },

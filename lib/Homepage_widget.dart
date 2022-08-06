@@ -137,8 +137,8 @@ class MyHomePage extends StatelessWidget {
       builder: (context) {
         return Dialog(
             shape: const RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.white),
-                borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+                side: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
             backgroundColor: backgroundColor,
             alignment: Alignment.center,
             child: Padding(
@@ -174,24 +174,21 @@ class MyHomePage extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(10))),
                         width: 300,
                         height: 150,
-                        child: Expanded(
-                          child: Column(children: [
-                            Icon(
-                              Icons.u_turn_left_sharp,
-                              color: backgroundColor,
-                              size: 80,
-                            ),
-                            Text(
-                              "Beylikdüzü Avcılar",
-                              style: Constant.WayDialogBlackStyle,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text("Yönüne Git",
-                                style: Constant.WayDialogRedStyle),
-                          ]),
-                        ),
+                        child: Column(children: [
+                          Icon(
+                            Icons.u_turn_left_sharp,
+                            color: backgroundColor,
+                            size: 80,
+                          ),
+                          Text(
+                            "Beylikdüzü Avcılar",
+                            style: Constant.WayDialogBlackStyle,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text("Yönüne Git", style: Constant.WayDialogRedStyle),
+                        ]),
                       ),
                     ),
                     const SizedBox(
