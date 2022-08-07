@@ -18,22 +18,19 @@ class NextStopBloc extends Bloc<NextStopEvent, NextStopState> {
     int count = 0;
     int nearWay = 0;
     on<UpdateNextStopEvent>((event, emit) async {
+      int way = event.way;
       if (event != null) {
         busStoplist = await locationRepository.BusStopList();
-        int way = event.way;
 
         for (var i = 0; i < busStoplist.length; i++) {
-          if (count < 1) {
-            double distance = await calculateDistance(
-              event.position.latitude,
-              event.position.longitude,
-              busStoplist[i].latitude,
-              busStoplist[i].longitude,
-            );
-            distanceList.add(distance);
-          }
+          double distance = await calculateDistance(
+            event.position.latitude,
+            event.position.longitude,
+            busStoplist[i].latitude,
+            busStoplist[i].longitude,
+          );
+          distanceList.add(distance);
         }
-        count++;
 
         double minDistance = await findMin(distanceList);
 
@@ -42,28 +39,19 @@ class NextStopBloc extends Bloc<NextStopEvent, NextStopState> {
             double a = await calculateDistance(
                 event.position.latitude,
                 event.position.longitude,
-                busStoplist[i + 1].latitude,
-                busStoplist[i + 1].longitude);
-            print(a);
-            print(busStoplist[i + 1].name);
+                busStoplist[i].latitude,
+                busStoplist[i].longitude);
+            if (way == 0) {
+              emit(MyNextStopState(NextStopValue: busStoplist[i + 1].name));
+            }
+            if (way == 1) {
+              emit(MyNextStopState(NextStopValue: busStoplist[i - 1].name));
+            }
           }
         }
 
-        if (way == 0) {}
-
-        emit(MyNextStopState(NextStopValue: busStoplist[way].name));
-        /*   for (int i = 0; i < busStoplist.length; i++) {
-          double distance = await LocationDistanceCalculator().distanceBetween(
-              busStoplist[i].latitude,
-              busStoplist[i].longitude,
-              eventlati!,
-              eventlongi!);
-
-          
-        }
-      }  else {
-        emit(MyNextStopState(NextStopValue: "Konum Alınamıyor"));
-      }*/
+        busStoplist.clear();
+        distanceList.clear();
       }
     });
   }

@@ -9,8 +9,8 @@ abstract class CurrentStopEvent extends Equatable {
 
 class UpdateCurrentStopEvent extends CurrentStopEvent {
   final LocationData position;
-  final int way;
-  const UpdateCurrentStopEvent({required this.position, required this.way});
+
+  const UpdateCurrentStopEvent({required this.position});
   @override
   List<Object> get props => [position];
 }

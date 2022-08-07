@@ -13,7 +13,7 @@ class CurrentStopInitial extends CurrentStopState {
       : super(nextStop: firstValue);
 }
 
-class MyNextStopState extends CurrentStopState {
-  MyNextStopState({required String NextStopValue})
+class MyCurrentStopState extends CurrentStopState {
+  MyCurrentStopState({required String NextStopValue})
       : super(nextStop: NextStopValue);
 }

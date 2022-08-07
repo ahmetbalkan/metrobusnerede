@@ -1,14 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get_it/get_it.dart';
 import 'package:location_distance_calculator/location_distance_calculator.dart';
 import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import 'package:metrobusnerede/location.dart';
 import 'dart:math';
 import '../../models/busStop.dart';
+import '../../models/next_stop_name_distance.dart';
 import '../../repository/repository.dart';
 
 part 'current_stop_event.dart';
 part 'current_stop_state.dart';
+
+MainPageModel mainPageModel = new MainPageModel(0, "Yükleniyor", "Yükleniyor");
 
 class CurrentStopBloc extends Bloc<CurrentStopEvent, CurrentStopState> {
   CurrentStopBloc() : super(CurrentStopInitial(firstValue: "Yükleniyor.")) {
@@ -17,10 +21,10 @@ class CurrentStopBloc extends Bloc<CurrentStopEvent, CurrentStopState> {
     List<double> distanceList = [];
     int count = 0;
     int nearWay = 0;
+
     on<UpdateCurrentStopEvent>((event, emit) async {
       if (event != null) {
         busStoplist = await locationRepository.BusStopList();
-        int way = event.way;
 
         for (var i = 0; i < busStoplist.length; i++) {
           double distance = await calculateDistance(
@@ -37,14 +41,9 @@ class CurrentStopBloc extends Bloc<CurrentStopEvent, CurrentStopState> {
         for (var i = 0; i < distanceList.length; i++) {
           if (distanceList[i] == minDistance) {
             if (minDistance < busStoplist[i].check / 2) {
-              double a = await calculateDistance(
-                  event.position.latitude,
-                  event.position.longitude,
-                  busStoplist[i].latitude,
-                  busStoplist[i].longitude);
-              emit(MyNextStopState(NextStopValue: busStoplist[i].name));
+              emit(MyCurrentStopState(NextStopValue: busStoplist[i].name));
             } else {
-              emit(MyNextStopState(NextStopValue: "ilerliyor"));
+              emit(MyCurrentStopState(NextStopValue: "ilerliyor"));
             }
           }
         }

@@ -11,12 +11,16 @@ class Constant {
     fontFamily: 'Armata',
   );
   static final busStopTitleStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(16),
+      fontSize: ScreenUtil().setSp(20),
       color: Colors.white,
       fontFamily: 'Armata');
 
   static final ledTextStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(24), color: Colors.white, fontFamily: 'Led');
+      height: 1.3, // the height between text, default is null
+      letterSpacing: 1.3,
+      fontSize: ScreenUtil().setSp(24),
+      color: Colors.white,
+      fontFamily: 'Led');
 
   static final ledTextGreenStyle = TextStyle(
       fontSize: ScreenUtil().setSp(24),

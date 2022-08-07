@@ -11,6 +11,7 @@ class UpdateNextStopEvent extends NextStopEvent {
   final LocationData position;
   final int way;
   const UpdateNextStopEvent({required this.position, required this.way});
+
   @override
-  List<Object> get props => [position];
+  List<Object> get props => [position, way];
 }

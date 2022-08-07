@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
+import 'package:metrobusnerede/bloc/next_stop/next_stop_bloc.dart';
 import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import 'Homepage_widget.dart';
 import 'bloc/current_stop/current_stop_bloc.dart';
@@ -42,6 +43,8 @@ class MyApp extends StatelessWidget {
                       LivelocationBloc()..add(LoadLocationEvent())),
               BlocProvider<CurrentStopBloc>(
                   create: (BuildContext context) => CurrentStopBloc()),
+              BlocProvider<NextStopBloc>(
+                  create: (BuildContext context) => NextStopBloc()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
