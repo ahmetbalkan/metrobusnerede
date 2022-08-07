@@ -16,7 +16,12 @@ class Constant {
       fontFamily: 'Armata');
 
   static final ledTextStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(20), color: Colors.white, fontFamily: 'Led');
+      fontSize: ScreenUtil().setSp(24), color: Colors.white, fontFamily: 'Led');
+
+  static final ledTextGreenStyle = TextStyle(
+      fontSize: ScreenUtil().setSp(24),
+      color: Colors.greenAccent,
+      fontFamily: 'Led');
   static final WayDialogBlackStyle = TextStyle(
     fontSize: ScreenUtil().setSp(18),
     color: Colors.black,

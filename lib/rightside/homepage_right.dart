@@ -1,8 +1,9 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:metrobusnerede/constant/color.dart';
+import '../bloc/current_stop/current_stop_bloc.dart';
 import '../bloc/livelocation/livelocation_bloc.dart';
-import '../bloc/next_stop/next_stop_bloc.dart';
 import '../constant/constant.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 
@@ -19,7 +20,7 @@ class HomepageRight extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (currentlocation is LivelocationLoaded) {
-          context.read<NextStopBloc>().add(UpdateNextStopEvent(
+          context.read<CurrentStopBloc>().add(UpdateCurrentStopEvent(
               position: currentlocation.position,
               way: context.watch<WayCounterBlocCubit>().state.way));
           try {
@@ -28,23 +29,53 @@ class HomepageRight extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 5),
-                    child: Text(
-                      "Durağındasınız.",
-                      style: Constant.busStopTitleStyle,
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        currentlocation.position.toString(),
-                        style: Constant.ledTextStyle,
-                      )),
-                  Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-                    child: Text(
-                      "Durağındasınız.",
-                      style: Constant.busStopTitleStyle,
+                    child: BlocBuilder<CurrentStopBloc, CurrentStopState>(
+                      builder: (context, state) {
+                        return Column(
+                          children: [
+                            state.nextStop == "ilerliyor"
+                                ? Column(
+                                    children: [
+                                      FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: Lottie.asset(
+                                            'assets/otobus.json',
+                                            width: 100,
+                                            height: 100,
+                                          )),
+                                      Text(
+                                        "Durağa İlerliyorsunuz..",
+                                        style: Constant.busStopTitleStyle,
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 15),
+                                        child: Text(
+                                          "şu an.",
+                                          style: Constant.busStopTitleStyle,
+                                        ),
+                                      ),
+                                      Text(
+                                        state.nextStop,
+                                        style: Constant.ledTextGreenStyle,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: Text(
+                                          "Durağındasınız.",
+                                          style: Constant.busStopTitleStyle,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                   const Divider(
@@ -117,14 +148,10 @@ class HomepageRight extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BlocBuilder<NextStopBloc, NextStopState>(
-                      builder: (context, state) {
-                        return Text(
-                          currentlocation.position.speed!.toInt().toString(),
-                          style: Constant.ledTextStyle,
-                        );
-                      },
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
+                    child: Text(
+                      currentlocation.position.speed!.toInt().toString(),
+                      style: Constant.ledTextStyle,
                     ),
                   ),
                   const Divider(
