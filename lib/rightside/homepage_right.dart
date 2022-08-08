@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import '../bloc/current_stop/current_stop_bloc.dart';
+import '../bloc/distance_next_stop/distance_next_stop_bloc.dart';
 import '../bloc/livelocation/livelocation_bloc.dart';
 import '../bloc/next_stop/next_stop_bloc.dart';
 import '../constant/constant.dart';
@@ -24,7 +25,12 @@ class HomepageRight extends StatelessWidget {
           context.read<CurrentStopBloc>().add(UpdateCurrentStopEvent(
                 position: currentlocation.position,
               ));
+
           context.read<NextStopBloc>().add(UpdateNextStopEvent(
+              position: currentlocation.position,
+              way: context.watch<WayCounterBlocCubit>().state.way));
+          context.read<DistanceNextStopBloc>().add(UpdateDistanceNextStopEvent(
+              nextStopName: context.watch<NextStopBloc>().state.nextStop,
               position: currentlocation.position,
               way: context.watch<WayCounterBlocCubit>().state.way));
           try {
@@ -116,12 +122,16 @@ class HomepageRight extends StatelessWidget {
                       style: Constant.busStopTitleStyle,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "MECIDIYEKOY",
-                      style: Constant.ledTextStyle,
-                    ),
+                  BlocBuilder<DistanceNextStopBloc, DistanceNextStopState>(
+                    builder: (context, distancestate) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          distancestate.nextStop.toString(),
+                          style: Constant.ledTextStyle,
+                        ),
+                      );
+                    },
                   ),
                   const Divider(
                     color: Colors.white,

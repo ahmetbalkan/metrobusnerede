@@ -15,6 +15,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () => showWayDialog(context));
     //int _secilenMenu = 0;
     return Scaffold(
       bottomNavigationBar: Theme(

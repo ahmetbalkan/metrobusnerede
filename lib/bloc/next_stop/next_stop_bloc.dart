@@ -36,16 +36,15 @@ class NextStopBloc extends Bloc<NextStopEvent, NextStopState> {
 
         for (var i = 0; i < distanceList.length; i++) {
           if (distanceList[i] == minDistance) {
-            double a = await calculateDistance(
-                event.position.latitude,
-                event.position.longitude,
-                busStoplist[i].latitude,
-                busStoplist[i].longitude);
             if (way == 0) {
-              emit(MyNextStopState(NextStopValue: busStoplist[i + 1].name));
+              if (minDistance < busStoplist[i].check / 2) {
+                emit(MyNextStopState(NextStopValue: busStoplist[i + 1].name));
+              }
             }
             if (way == 1) {
-              emit(MyNextStopState(NextStopValue: busStoplist[i - 1].name));
+              if (minDistance < busStoplist[i].check / 2) {
+                emit(MyNextStopState(NextStopValue: busStoplist[i - 1].name));
+              }
             }
           }
         }
