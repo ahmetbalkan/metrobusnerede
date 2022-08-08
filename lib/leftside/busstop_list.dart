@@ -1,8 +1,10 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/constant.dart';
 import '../constant/color.dart';
 import '../cubit/list_cubit.dart';
+import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import '../models/busStop.dart';
 
 class busstop_list extends StatelessWidget {
@@ -14,6 +16,7 @@ class busstop_list extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var a = (MediaQuery.of(context).size.height) - 220;
+    int way = context.watch<WayCounterBlocCubit>().state.way;
 
     context.read<ListCubit>().loadBusstopList();
     return Column(
@@ -46,7 +49,18 @@ class busstop_list extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       decoration: BoxDecoration(
-                        color: index == 3 ? Colors.green : null,
+                        color: index ==
+                                context.watch<LeftListBloc>().state.nextStop
+                            ? Colors.green
+                            : index ==
+                                    wayMethod(
+                                        way,
+                                        context
+                                            .watch<LeftListBloc>()
+                                            .state
+                                            .nextStop)
+                                ? Colors.orange.shade600
+                                : null,
                         border: Border(
                           bottom: BorderSide(
                               width: Constant.borderSize, color: borderColor),
@@ -66,5 +80,13 @@ class busstop_list extends StatelessWidget {
         )
       ],
     );
+  }
+
+  int? wayMethod(int way, int currentstate) {
+    if (way == 1) {
+      return currentstate = currentstate - 1;
+    } else if (way == 0) {
+      return currentstate = currentstate + 1;
+    }
   }
 }

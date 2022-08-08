@@ -1,6 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import '../bloc/current_stop/current_stop_bloc.dart';
 import '../bloc/distance_next_stop/distance_next_stop_bloc.dart';
@@ -22,17 +23,21 @@ class HomepageRight extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (currentlocation is LivelocationLoaded) {
-          context.read<CurrentStopBloc>().add(UpdateCurrentStopEvent(
+          context.watch<CurrentStopBloc>().add(UpdateCurrentStopEvent(
                 position: currentlocation.position,
               ));
 
-          context.read<NextStopBloc>().add(UpdateNextStopEvent(
+          context.watch<NextStopBloc>().add(UpdateNextStopEvent(
               position: currentlocation.position,
               way: context.watch<WayCounterBlocCubit>().state.way));
-          context.read<DistanceNextStopBloc>().add(UpdateDistanceNextStopEvent(
+          context.watch<DistanceNextStopBloc>().add(UpdateDistanceNextStopEvent(
               nextStopName: context.watch<NextStopBloc>().state.nextStop,
               position: currentlocation.position,
               way: context.watch<WayCounterBlocCubit>().state.way));
+          context.watch<LeftListBloc>().add(UpdateLeftListEvent(
+                nextStopName: context.watch<CurrentStopBloc>().state.nextStop,
+              ));
+
           try {
             return Container(
               color: backgroundColor,

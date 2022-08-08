@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:metrobusnerede/bloc/distance_next_stop/distance_next_stop_bloc.dart';
+import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
 import 'package:metrobusnerede/bloc/next_stop/next_stop_bloc.dart';
 import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
@@ -48,6 +49,8 @@ class MyApp extends StatelessWidget {
                   create: (BuildContext context) => NextStopBloc()),
               BlocProvider<DistanceNextStopBloc>(
                   create: (BuildContext context) => DistanceNextStopBloc()),
+              BlocProvider<LeftListBloc>(
+                  create: (BuildContext context) => LeftListBloc()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

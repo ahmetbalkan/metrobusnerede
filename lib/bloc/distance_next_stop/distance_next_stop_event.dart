@@ -15,5 +15,5 @@ class UpdateDistanceNextStopEvent extends DistanceNextStopEvent {
       {required this.nextStopName, required this.position, required this.way});
 
   @override
-  List<Object> get props => [nextStopName, way];
+  List<Object> get props => [nextStopName, way, position];
 }
