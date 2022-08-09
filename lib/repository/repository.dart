@@ -1,9 +1,18 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:location/location.dart' as loc;
+import 'package:metrobusnerede/constant/color.dart';
 
+import '../constant/constant.dart';
+import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
+import '../locator.dart';
 import '../models/busStop.dart';
 
 class LocationRepository {
+  var box = Hive.box("alarmid");
+
   Future<List<busStop>> BusStopList() async {
     List<busStop> busStopList = [];
     busStopList.add(busStop(0, "B.DUZU SONDURAK", 41.022019, 28.625050, 168));
@@ -58,5 +67,274 @@ class LocationRepository {
     busStopList.add(busStop(41, "FIKIRTEPE", 40.993912, 29.048362, 300));
     busStopList.add(busStop(42, "S.CESME SONDURAK", 40.991768, 29.037694, 130));
     return busStopList;
+  }
+
+  void showWayDialog(BuildContext context) {
+    showDialog(
+      barrierColor: Colors.black87,
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return Expanded(
+          child: Dialog(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              backgroundColor: backgroundColor,
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Lütfen gitmek istediğiniz yönü seçiniz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          context.read<WayCounterBlocCubit>().Beylikduzu();
+                          print(context.read<WayCounterBlocCubit>().state.way);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          width: 140,
+                          height: 150,
+                          child: Column(children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.red.shade300,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30))),
+                              child: Icon(
+                                Icons.chevron_left_rounded,
+                                color: Colors.white,
+                                size: 50,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              "Beylikdüzü Avcılar",
+                              style: Constant.WayDialogBlackStyle,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Yönüne Git",
+                                style: Constant.WayDialogRedStyle),
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          context.read<WayCounterBlocCubit>().SogutluCesme();
+                          print(context.read<WayCounterBlocCubit>().state.way);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          width: 140,
+                          height: 150,
+                          child: Column(children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.red.shade300,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30))),
+                                  child: Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: Colors.white,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              "Zincirlikuyu Söğütlüçeşme",
+                              style: Constant.WayDialogBlackStyle,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Yönüne Git",
+                                style: Constant.WayDialogRedStyle),
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Divider(
+                        color: Colors.white,
+                        thickness: 1,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Seçim yapmadan bu bölümü geçemessiniz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ]),
+              )),
+        );
+      },
+    );
+  }
+
+  AppBar AppbarWidget(
+      LocationRepository locationRepository, BuildContext context) {
+    return AppBar(
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20, bottom: 5),
+          child: InkWell(
+            onTap: () {
+              showWayDialog(context);
+            },
+            child: Column(
+              children: const [
+                Icon(
+                  Icons.change_circle,
+                  size: 35,
+                ),
+                Text(
+                  "Yönü Değiştir",
+                  style: TextStyle(fontSize: 10),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Column(
+          children: const [
+            Icon(
+              Icons.menu,
+              size: 35,
+            ),
+            Text(
+              "Menü",
+              style: TextStyle(fontSize: 10),
+            )
+          ],
+        ),
+      ),
+      title: Column(
+        children: [
+          Center(
+            child: Image.asset(
+              "assets/logo.png",
+              width: 150,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: backgroundColor,
+    );
+  }
+
+  AppBar AppbarAlarmWidget(
+      LocationRepository locationRepository, BuildContext context) {
+    return AppBar(
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20, bottom: 5),
+          child: InkWell(
+            onTap: () {
+              showWayDialog(context);
+            },
+            child: Column(
+              children: const [
+                Icon(
+                  Icons.settings,
+                  size: 35,
+                ),
+                Text(
+                  "Alarm Ayarları",
+                  style: TextStyle(fontSize: 10),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+      title: Column(
+        children: [
+          Center(
+            child: Image.asset(
+              "assets/logo.png",
+              width: 150,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: backgroundColor,
+    );
+  }
+
+  Future<String> ListTobusStopName(int id) async {
+    var list = await BusStopList();
+    var name;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].busstopid == id) {
+        name = list[i].name;
+      }
+    }
+    return name;
   }
 }

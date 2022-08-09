@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:metrobusnerede/bloc/distance_alarm_stop/distance_alarm_stop_bloc.dart';
 import 'package:metrobusnerede/bloc/distance_next_stop/distance_next_stop_bloc.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
 import 'package:metrobusnerede/bloc/next_stop/next_stop_bloc.dart';
 import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
-import 'Homepage_widget.dart';
+import 'Homepage/Homepage_widget.dart';
 import 'bloc/current_stop/current_stop_bloc.dart';
 import 'constant/color.dart';
+import 'cubit/alarm_name_cubit/alarm_name_cubit.dart';
 import 'cubit/list_cubit.dart';
 import 'locator.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('alarmid');
   locatorMethod();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: backgroundColor,
@@ -51,6 +56,10 @@ class MyApp extends StatelessWidget {
                   create: (BuildContext context) => DistanceNextStopBloc()),
               BlocProvider<LeftListBloc>(
                   create: (BuildContext context) => LeftListBloc()),
+              BlocProvider<AlarmNameCubit>(
+                  create: (BuildContext context) => AlarmNameCubit()),
+              BlocProvider<DistanceAlarmStopBloc>(
+                  create: (BuildContext context) => DistanceAlarmStopBloc()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

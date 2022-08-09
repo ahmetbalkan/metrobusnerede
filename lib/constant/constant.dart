@@ -14,6 +14,14 @@ class Constant {
       fontSize: ScreenUtil().setSp(20),
       color: Colors.white,
       fontFamily: 'Armata');
+  static final busStopTitleRedStyle = TextStyle(
+      fontSize: ScreenUtil().setSp(20),
+      color: backgroundColor,
+      fontFamily: 'Armata');
+  static final buttonText = TextStyle(
+      fontSize: ScreenUtil().setSp(25),
+      color: backgroundColor,
+      fontFamily: 'Armata');
 
   static final ledTextStyle = TextStyle(
       height: 1.3, // the height between text, default is null
@@ -35,5 +43,10 @@ class Constant {
     fontSize: ScreenUtil().setSp(18),
     color: backgroundColor,
     fontFamily: 'Armata',
+  );
+  static final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+    primary: Colors.white,
+    textStyle: const TextStyle(
+        fontSize: 18, color: Colors.red, fontWeight: FontWeight.normal),
   );
 }

@@ -19,6 +19,7 @@ class busstop_list extends StatelessWidget {
     int way = context.watch<WayCounterBlocCubit>().state.way;
 
     context.read<ListCubit>().loadBusstopList();
+
     return Column(
       children: [
         Container(

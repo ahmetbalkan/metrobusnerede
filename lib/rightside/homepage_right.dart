@@ -1,14 +1,20 @@
+import 'dart:ui';
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:metrobusnerede/alarm_list.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
+import 'package:metrobusnerede/locator.dart';
 import '../bloc/current_stop/current_stop_bloc.dart';
+import '../bloc/distance_alarm_stop/distance_alarm_stop_bloc.dart';
 import '../bloc/distance_next_stop/distance_next_stop_bloc.dart';
 import '../bloc/livelocation/livelocation_bloc.dart';
 import '../bloc/next_stop/next_stop_bloc.dart';
 import '../constant/constant.dart';
+import '../cubit/alarm_name_cubit/alarm_name_cubit.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
+import '../repository/repository.dart';
 
 class HomepageRight extends StatelessWidget {
   HomepageRight({Key? key}) : super(key: key);
@@ -16,6 +22,7 @@ class HomepageRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("right");
+    final locationRepository = locator.get<LocationRepository>();
     return BlocBuilder<LivelocationBloc, LivelocationState>(
       builder: (context, currentlocation) {
         if (currentlocation is LivelocationLoading) {
@@ -36,6 +43,12 @@ class HomepageRight extends StatelessWidget {
               way: context.watch<WayCounterBlocCubit>().state.way));
           context.watch<LeftListBloc>().add(UpdateLeftListEvent(
                 nextStopName: context.watch<CurrentStopBloc>().state.nextStop,
+              ));
+          context
+              .watch<DistanceAlarmStopBloc>()
+              .add(UpdateDistanceAlarmStopEvent(
+                alarmStopName: context.watch<AlarmNameCubit>().state.alarmname,
+                position: currentlocation.position,
               ));
 
           try {
@@ -151,21 +164,28 @@ class HomepageRight extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "BELIRLENMEDI.",
-                      style: Constant.ledTextStyle,
+                    child: BlocBuilder<AlarmNameCubit, AlarmNameState>(
+                      builder: (context, state) {
+                        return Center(
+                          child: Text(
+                            state.alarmname,
+                            style: Constant.ledTextStyle,
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      },
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "DURAK SEÇ",
-                      style: TextStyle(
-                          color: backgroundColor,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold),
+                    style: Constant.buttonStyle,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AlarmList()));
+                    },
+                    child: const Text(
+                      'Durak Seç',
+                      style: TextStyle(color: Colors.red),
                     ),
-                    style: ElevatedButton.styleFrom(primary: Colors.white),
                   ),
                   const Divider(
                     color: Colors.white,
@@ -197,12 +217,16 @@ class HomepageRight extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "100 M",
-                      style: Constant.ledTextStyle,
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: BlocBuilder<DistanceAlarmStopBloc,
+                          DistanceAlarmStopState>(
+                        builder: (context, state) {
+                          return Text(
+                            state.nextStop.toInt().toString(),
+                            style: Constant.ledTextStyle,
+                          );
+                        },
+                      )),
                 ],
               ),
             );
