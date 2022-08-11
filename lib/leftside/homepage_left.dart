@@ -6,7 +6,6 @@ class HomepageLeft extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("left");
     return busstop_list();
   }
 }

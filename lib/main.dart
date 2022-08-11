@@ -1,6 +1,8 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/bloc/distance_alarm_stop/distance_alarm_stop_bloc.dart';
@@ -9,7 +11,7 @@ import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
 import 'package:metrobusnerede/bloc/next_stop/next_stop_bloc.dart';
 import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
-import 'Homepage/Homepage_widget.dart';
+import 'Homepage/home_page_widget.dart';
 import 'bloc/current_stop/current_stop_bloc.dart';
 import 'constant/color.dart';
 import 'cubit/alarm_name_cubit/alarm_name_cubit.dart';
@@ -18,8 +20,37 @@ import 'locator.dart';
 
 void main() async {
   await Hive.initFlutter();
-  await Hive.openBox('alarmid');
+  await Hive.openBox('firsttime');
+  var box = Hive.box('firsttime');
+  box.put("firsttime", true);
   locatorMethod();
+  AwesomeNotifications().initialize(
+      // set the icon to null if you want to use the default app icon
+      'resource://drawable/metrobuslogo',
+      [
+        NotificationChannel(
+          channelKey: 'Metrobus_Nerede',
+          channelName: 'Metrobus Nerede Bildirimi',
+          channelDescription: 'Metrobus Nerede Bildirimi',
+          defaultColor: materialBackgroundColor,
+          importance: NotificationImportance.High,
+          channelShowBadge: true,
+        )
+      ],
+      // Channel groups are only visual and are not required
+      channelGroups: [
+        NotificationChannelGroup(
+            channelGroupkey: 'metrobus_nerede',
+            channelGroupName: 'Metrobus Nerede Bildirimi')
+      ],
+      debug: true);
+
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: backgroundColor,
       statusBarIconBrightness: Brightness.dark,
@@ -65,8 +96,11 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Metrobüs Nerede?',
               theme: ThemeData(
+                iconTheme: IconThemeData(color: Colors.red),
+                scaffoldBackgroundColor: backgroundColor,
+                backgroundColor: backgroundColor,
                 fontFamily: 'Armata',
-                primarySwatch: Colors.blue,
+                primarySwatch: materialBackgroundColor,
               ),
               home: const MyHomePage(),
             ),

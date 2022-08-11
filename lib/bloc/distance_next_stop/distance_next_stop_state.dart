@@ -9,11 +9,11 @@ abstract class DistanceNextStopState extends Equatable {
 }
 
 class DistanceNextStopInitial extends DistanceNextStopState {
-  DistanceNextStopInitial({required int firstValue})
+  const DistanceNextStopInitial({required int firstValue})
       : super(nextStop: firstValue);
 }
 
 class MyDistanceNextStopState extends DistanceNextStopState {
-  MyDistanceNextStopState({required int NextStopValue})
-      : super(nextStop: NextStopValue);
+  const MyDistanceNextStopState({required int nextStopValue})
+      : super(nextStop: nextStopValue);
 }

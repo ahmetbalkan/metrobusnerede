@@ -9,9 +9,9 @@ abstract class WayCounterBlocState extends Equatable {
 }
 
 class WayCounterBlocInitial extends WayCounterBlocState {
-  WayCounterBlocInitial({required int Firstway}) : super(way: Firstway);
+  const WayCounterBlocInitial({required int firstway}) : super(way: firstway);
 }
 
 class WayCounterState extends WayCounterBlocState {
-  WayCounterState({required int CounterWay}) : super(way: CounterWay);
+  const WayCounterState({required int counterWay}) : super(way: counterWay);
 }

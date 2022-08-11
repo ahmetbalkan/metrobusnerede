@@ -1,25 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:metrobusnerede/location.dart';
 import 'dart:math';
-import '../../models/busStop.dart';
+import '../../models/bus_stop.dart';
 import '../../repository/repository.dart';
 
 part 'left_list_event.dart';
 part 'left_list_state.dart';
 
 class LeftListBloc extends Bloc<LeftListEvent, LeftListState> {
-  LeftListBloc() : super(LeftListInitial(firstValue: 0)) {
+  LeftListBloc() : super(const LeftListInitial(firstValue: 0)) {
     final locationRepository = LocationRepository();
     List<busStop> busStoplist = [];
 
     on<UpdateLeftListEvent>((event, emit) async {
-      busStoplist = await locationRepository.BusStopList();
-      if (event != null) {
-        for (var i = 0; i < busStoplist.length; i++) {
-          if (busStoplist[i].name == event.nextStopName) {
-            emit(MyLeftListState(NextStopValue: i));
+      busStoplist = await locationRepository.busStopList();
+      for (var i = 0; i < busStoplist.length; i++) {
+        if (busStoplist[i].name == event.nextStopName) {
+          if (event.way == 0) {
+            emit(MyLeftListState(nextStopValue: i - 1));
+          }
+          if (event.way == 1) {
+            emit(MyLeftListState(nextStopValue: i + 1));
           }
         }
       }

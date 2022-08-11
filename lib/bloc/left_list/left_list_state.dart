@@ -9,10 +9,11 @@ abstract class LeftListState extends Equatable {
 }
 
 class LeftListInitial extends LeftListState {
-  LeftListInitial({required int firstValue}) : super(nextStop: firstValue);
+  const LeftListInitial({required int firstValue})
+      : super(nextStop: firstValue);
 }
 
 class MyLeftListState extends LeftListState {
-  MyLeftListState({required int NextStopValue})
-      : super(nextStop: NextStopValue);
+  const MyLeftListState({required int nextStopValue})
+      : super(nextStop: nextStopValue);
 }

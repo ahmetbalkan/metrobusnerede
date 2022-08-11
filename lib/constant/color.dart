@@ -20,6 +20,21 @@ MaterialColor materialColorWhite = const MaterialColor(
   },
 );
 
+MaterialColor materialBackgroundColor = const MaterialColor(
+  0xFFFFFFFF,
+  <int, Color>{
+    50: Color(0xFFe94546),
+    100: Color(0xFFe94546),
+    200: Color(0xFFe94546),
+    300: Color(0xFFe94546),
+    400: Color(0xFFe94546),
+    500: Color(0xFFe94546),
+    600: Color(0xFFe94546),
+    700: Color(0xFFe94546),
+    800: Color(0xFFe94546),
+    900: Color(0xFFe94546),
+  },
+);
 var borderOnlyBottom = Border(
   bottom: BorderSide(width: Constant.borderSize, color: borderColor),
 );

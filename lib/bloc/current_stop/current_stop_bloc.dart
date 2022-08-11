@@ -1,56 +1,51 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:get_it/get_it.dart';
-import 'package:location_distance_calculator/location_distance_calculator.dart';
-import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import 'package:metrobusnerede/location.dart';
 import 'dart:math';
-import '../../models/busStop.dart';
+import '../../models/bus_stop.dart';
 import '../../models/next_stop_name_distance.dart';
 import '../../repository/repository.dart';
 
 part 'current_stop_event.dart';
 part 'current_stop_state.dart';
 
-MainPageModel mainPageModel = new MainPageModel(0, "Yükleniyor", "Yükleniyor");
+MainPageModel mainPageModel = MainPageModel(0, "Yükleniyor", "Yükleniyor");
 
 class CurrentStopBloc extends Bloc<CurrentStopEvent, CurrentStopState> {
-  CurrentStopBloc() : super(CurrentStopInitial(firstValue: "Yükleniyor.")) {
+  CurrentStopBloc()
+      : super(const CurrentStopInitial(firstValue: "Yükleniyor.")) {
     final locationRepository = LocationRepository();
     List<busStop> busStoplist = [];
     List<double> distanceList = [];
-    int count = 0;
-    int nearWay = 0;
 
     on<UpdateCurrentStopEvent>((event, emit) async {
-      if (event != null) {
-        busStoplist = await locationRepository.BusStopList();
+      busStoplist = await locationRepository.busStopList();
 
-        for (var i = 0; i < busStoplist.length; i++) {
-          double distance = await calculateDistance(
-            event.position.latitude,
-            event.position.longitude,
-            busStoplist[i].latitude,
-            busStoplist[i].longitude,
-          );
-          distanceList.add(distance);
-        }
+      for (var i = 0; i < busStoplist.length; i++) {
+        double distance = await calculateDistance(
+          event.position.latitude,
+          event.position.longitude,
+          busStoplist[i].latitude,
+          busStoplist[i].longitude,
+        );
+        distanceList.add(distance);
+      }
 
-        double minDistance = await findMin(distanceList);
+      double minDistance = await findMin(distanceList);
 
-        for (var i = 0; i < distanceList.length; i++) {
-          if (distanceList[i] == minDistance) {
-            if (minDistance < busStoplist[i].check / 2) {
-              emit(MyCurrentStopState(NextStopValue: busStoplist[i].name));
-            } else {
-              emit(MyCurrentStopState(NextStopValue: "ilerliyor"));
-            }
+      for (var i = 0; i < distanceList.length; i++) {
+        if (distanceList[i] == minDistance) {
+          emit(MyCurrentStopState(nextStopValue: busStoplist[i].name));
+          if (minDistance < busStoplist[i].check / 2) {
+            emit(MyCurrentStopState(nextStopValue: busStoplist[i].name));
+          } else {
+            emit(const MyCurrentStopState(nextStopValue: "ilerliyor"));
           }
         }
-
-        busStoplist.clear();
-        distanceList.clear();
       }
+
+      busStoplist.clear();
+      distanceList.clear();
     });
   }
 

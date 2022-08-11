@@ -9,10 +9,11 @@ abstract class NextStopState extends Equatable {
 }
 
 class NextStopInitial extends NextStopState {
-  NextStopInitial({required String firstValue}) : super(nextStop: firstValue);
+  const NextStopInitial({required String firstValue})
+      : super(nextStop: firstValue);
 }
 
 class MyNextStopState extends NextStopState {
-  MyNextStopState({required String NextStopValue})
-      : super(nextStop: NextStopValue);
+  const MyNextStopState({required String nextStopValue})
+      : super(nextStop: nextStopValue);
 }

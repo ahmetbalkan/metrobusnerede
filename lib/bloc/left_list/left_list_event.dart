@@ -9,8 +9,9 @@ abstract class LeftListEvent extends Equatable {
 
 class UpdateLeftListEvent extends LeftListEvent {
   final String nextStopName;
-  const UpdateLeftListEvent({required this.nextStopName});
+  final int way;
+  const UpdateLeftListEvent({required this.nextStopName, required this.way});
 
   @override
-  List<Object> get props => [nextStopName];
+  List<Object> get props => [nextStopName, way];
 }

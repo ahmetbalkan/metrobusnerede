@@ -1,11 +1,10 @@
-import 'dart:ui';
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:metrobusnerede/alarm_list.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
-import 'package:metrobusnerede/locator.dart';
+import 'package:metrobusnerede/notofications.dart';
 import '../bloc/current_stop/current_stop_bloc.dart';
 import '../bloc/distance_alarm_stop/distance_alarm_stop_bloc.dart';
 import '../bloc/distance_next_stop/distance_next_stop_bloc.dart';
@@ -14,15 +13,12 @@ import '../bloc/next_stop/next_stop_bloc.dart';
 import '../constant/constant.dart';
 import '../cubit/alarm_name_cubit/alarm_name_cubit.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
-import '../repository/repository.dart';
 
 class HomepageRight extends StatelessWidget {
-  HomepageRight({Key? key}) : super(key: key);
+  const HomepageRight({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print("right");
-    final locationRepository = locator.get<LocationRepository>();
     return BlocBuilder<LivelocationBloc, LivelocationState>(
       builder: (context, currentlocation) {
         if (currentlocation is LivelocationLoading) {
@@ -33,7 +29,6 @@ class HomepageRight extends StatelessWidget {
           context.watch<CurrentStopBloc>().add(UpdateCurrentStopEvent(
                 position: currentlocation.position,
               ));
-
           context.watch<NextStopBloc>().add(UpdateNextStopEvent(
               position: currentlocation.position,
               way: context.watch<WayCounterBlocCubit>().state.way));
@@ -42,8 +37,8 @@ class HomepageRight extends StatelessWidget {
               position: currentlocation.position,
               way: context.watch<WayCounterBlocCubit>().state.way));
           context.watch<LeftListBloc>().add(UpdateLeftListEvent(
-                nextStopName: context.watch<CurrentStopBloc>().state.nextStop,
-              ));
+              nextStopName: context.watch<NextStopBloc>().state.nextStop,
+              way: context.watch<WayCounterBlocCubit>().state.way));
           context
               .watch<DistanceAlarmStopBloc>()
               .add(UpdateDistanceAlarmStopEvent(
@@ -179,8 +174,11 @@ class HomepageRight extends StatelessWidget {
                   ElevatedButton(
                     style: Constant.buttonStyle,
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AlarmList()));
+                      createAlarmNotification("name");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AlarmList()));
                     },
                     child: const Text(
                       'Durak Seç',

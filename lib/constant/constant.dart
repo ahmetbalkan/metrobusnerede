@@ -34,12 +34,12 @@ class Constant {
       fontSize: ScreenUtil().setSp(24),
       color: Colors.greenAccent,
       fontFamily: 'Led');
-  static final WayDialogBlackStyle = TextStyle(
+  static final wayDialogBlackStyle = TextStyle(
     fontSize: ScreenUtil().setSp(18),
     color: Colors.black,
     fontFamily: 'Armata',
   );
-  static final WayDialogRedStyle = TextStyle(
+  static final wayDialogRedStyle = TextStyle(
     fontSize: ScreenUtil().setSp(18),
     color: backgroundColor,
     fontFamily: 'Armata',

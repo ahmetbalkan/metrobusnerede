@@ -40,7 +40,19 @@ dependencies:
   lottie: ^1.4.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  flutter_local_notifications: ^9.7.0
+  awesome_notifications: ^0.6.21
+  audio_service: ^0.18.7
+  flutter_launcher_icons: "^0.10.0"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/alarm_icon.png"
+  adaptive_icon_background: "#E84445"
+
+  
+  
+
 
 dev_dependencies:
 

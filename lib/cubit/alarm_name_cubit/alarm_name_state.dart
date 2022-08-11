@@ -9,9 +9,10 @@ abstract class AlarmNameState extends Equatable {
 }
 
 class AlarmNameInitial extends AlarmNameState {
-  AlarmNameInitial({required String alarmid}) : super(alarmname: alarmid);
+  const AlarmNameInitial({required String alarmid}) : super(alarmname: alarmid);
 }
 
 class UpdateAlarmNameState extends AlarmNameState {
-  UpdateAlarmNameState({required String alarmid}) : super(alarmname: alarmid);
+  const UpdateAlarmNameState({required String alarmid})
+      : super(alarmname: alarmid);
 }

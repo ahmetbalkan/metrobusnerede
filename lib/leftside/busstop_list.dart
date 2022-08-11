@@ -5,7 +5,7 @@ import 'package:metrobusnerede/constant/constant.dart';
 import '../constant/color.dart';
 import '../cubit/list_cubit.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
-import '../models/busStop.dart';
+import '../models/bus_stop.dart';
 
 class busstop_list extends StatelessWidget {
   late List<busStop> busStopList;

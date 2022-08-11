@@ -2,18 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:location/location.dart' as loc;
 import 'package:metrobusnerede/constant/color.dart';
-
+import 'package:metrobusnerede/notofications.dart';
 import '../constant/constant.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
-import '../locator.dart';
-import '../models/busStop.dart';
+import '../models/bus_stop.dart';
 
 class LocationRepository {
-  var box = Hive.box("alarmid");
-
-  Future<List<busStop>> BusStopList() async {
+  Future<List<busStop>> busStopList() async {
     List<busStop> busStopList = [];
     busStopList.add(busStop(0, "B.DUZU SONDURAK", 41.022019, 28.625050, 168));
     busStopList.add(busStop(1, "BEYKENT", 41.019562, 28.630895, 154));
@@ -70,6 +66,7 @@ class LocationRepository {
   }
 
   void showWayDialog(BuildContext context) {
+    var box = Hive.box('firsttime');
     showDialog(
       barrierColor: Colors.black87,
       barrierDismissible: false,
@@ -108,8 +105,8 @@ class LocationRepository {
                     children: [
                       InkWell(
                         onTap: () {
-                          context.read<WayCounterBlocCubit>().Beylikduzu();
-                          print(context.read<WayCounterBlocCubit>().state.way);
+                          context.read<WayCounterBlocCubit>().beylikduzu();
+                          box.put("firsttime", true);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -117,37 +114,37 @@ class LocationRepository {
                           decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
+                                  BorderRadius.all(Radius.circular(10))),
                           width: 140,
                           height: 150,
                           child: Column(children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
                               decoration: BoxDecoration(
                                   color: Colors.red.shade300,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30))),
-                              child: Icon(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(30))),
+                              child: const Icon(
                                 Icons.chevron_left_rounded,
                                 color: Colors.white,
                                 size: 50,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               textAlign: TextAlign.center,
                               "Beylikdüzü Avcılar",
-                              style: Constant.WayDialogBlackStyle,
+                              style: Constant.wayDialogBlackStyle,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text("Yönüne Git",
-                                style: Constant.WayDialogRedStyle),
+                                style: Constant.wayDialogRedStyle),
                           ]),
                         ),
                       ),
@@ -156,8 +153,8 @@ class LocationRepository {
                       ),
                       InkWell(
                         onTap: () {
-                          context.read<WayCounterBlocCubit>().SogutluCesme();
-                          print(context.read<WayCounterBlocCubit>().state.way);
+                          context.read<WayCounterBlocCubit>().sogutluCesme();
+                          box.put("firsttime", true);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -165,11 +162,11 @@ class LocationRepository {
                           decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
+                                  BorderRadius.all(Radius.circular(10))),
                           width: 140,
                           height: 150,
                           child: Column(children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
@@ -178,9 +175,9 @@ class LocationRepository {
                                 Container(
                                   decoration: BoxDecoration(
                                       color: Colors.red.shade300,
-                                      borderRadius: BorderRadius.all(
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(30))),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.chevron_right_rounded,
                                     color: Colors.white,
                                     size: 50,
@@ -188,19 +185,19 @@ class LocationRepository {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               textAlign: TextAlign.center,
                               "Zincirlikuyu Söğütlüçeşme",
-                              style: Constant.WayDialogBlackStyle,
+                              style: Constant.wayDialogBlackStyle,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text("Yönüne Git",
-                                style: Constant.WayDialogRedStyle),
+                                style: Constant.wayDialogRedStyle),
                           ]),
                         ),
                       ),
@@ -216,15 +213,22 @@ class LocationRepository {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Text(
                     textAlign: TextAlign.center,
                     "Seçim yapmadan bu bölümü geçemessiniz.",
                     style: Constant.busStopTitleStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ]),
@@ -234,7 +238,7 @@ class LocationRepository {
     );
   }
 
-  AppBar AppbarWidget(
+  AppBar appbarWidget(
       LocationRepository locationRepository, BuildContext context) {
     return AppBar(
       actions: [
@@ -259,19 +263,24 @@ class LocationRepository {
           ),
         ),
       ],
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: Column(
-          children: const [
-            Icon(
-              Icons.menu,
-              size: 35,
-            ),
-            Text(
-              "Menü",
-              style: TextStyle(fontSize: 10),
-            )
-          ],
+      leading: InkWell(
+        onTap: () {
+          createAlarmNotification("name");
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Column(
+            children: const [
+              Icon(
+                Icons.menu,
+                size: 35,
+              ),
+              Text(
+                "Menü",
+                style: TextStyle(fontSize: 10),
+              )
+            ],
+          ),
         ),
       ),
       title: Column(
@@ -288,7 +297,7 @@ class LocationRepository {
     );
   }
 
-  AppBar AppbarAlarmWidget(
+  AppBar appbarAlarmWidget(
       LocationRepository locationRepository, BuildContext context) {
     return AppBar(
       actions: [
@@ -327,14 +336,19 @@ class LocationRepository {
     );
   }
 
-  Future<String> ListTobusStopName(int id) async {
-    var list = await BusStopList();
-    var name;
+  Future<String> listTobusStopName(int id) async {
+    var list = await busStopList();
+    var name = "";
     for (var i = 0; i < list.length; i++) {
       if (list[i].busstopid == id) {
         name = list[i].name;
       }
     }
     return name;
+  }
+
+  int idGenerator() {
+    final now = DateTime.now();
+    return now.millisecondsSinceEpoch;
   }
 }

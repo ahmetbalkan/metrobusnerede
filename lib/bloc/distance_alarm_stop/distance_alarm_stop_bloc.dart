@@ -1,35 +1,37 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:location_distance_calculator/location_distance_calculator.dart';
-import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import 'package:metrobusnerede/location.dart';
+import 'package:metrobusnerede/notofications.dart';
 import 'dart:math';
-import '../../models/busStop.dart';
+import '../../models/bus_stop.dart';
 import '../../repository/repository.dart';
-import 'dart:developer';
 part 'distance_alarm_stop_event.dart';
 part 'distance_alarm_stop_state.dart';
 
 class DistanceAlarmStopBloc
     extends Bloc<DistanceAlarmStopEvent, DistanceAlarmStopState> {
-  DistanceAlarmStopBloc() : super(DistanceAlarmStopInitial(firstValue: 0)) {
+  DistanceAlarmStopBloc()
+      : super(const DistanceAlarmStopInitial(firstValue: 0)) {
     final locationRepository = LocationRepository();
     List<busStop> busStoplist = [];
+    bool check = true;
 
     on<UpdateDistanceAlarmStopEvent>((event, emit) async {
-      busStoplist = await locationRepository.BusStopList();
-      if (event != null) {
-        for (var i = 0; i < busStoplist.length; i++) {
-          if (busStoplist[i].name == event.alarmStopName) {
-            double bduzudistance = await calculateDistance(
-                event.position.latitude,
-                event.position.longitude,
-                busStoplist[i].latitude,
-                busStoplist[i].longitude);
-            emit(
-                MyDistanceAlarmStopState(NextStopValue: bduzudistance.toInt()));
+      busStoplist = await locationRepository.busStopList();
+      for (var i = 0; i < busStoplist.length; i++) {
+        if (busStoplist[i].name == event.alarmStopName) {
+          double alarmdistance = await calculateDistance(
+              event.position.latitude,
+              event.position.longitude,
+              busStoplist[i].latitude,
+              busStoplist[i].longitude);
+          if (check) {
+            if (alarmdistance < busStoplist[i].check) {
+              createAlarmNotification(busStoplist[i].name);
+            }
+            check = false;
           }
+          emit(MyDistanceAlarmStopState(nextStopValue: alarmdistance.toInt()));
         }
       }
     });

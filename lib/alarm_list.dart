@@ -7,17 +7,17 @@ import 'constant/constant.dart';
 import 'cubit/alarm_name_cubit/alarm_name_cubit.dart';
 import 'cubit/list_cubit.dart';
 import 'locator.dart';
-import 'models/busStop.dart';
+import 'models/bus_stop.dart';
 
 class AlarmList extends StatelessWidget {
   const AlarmList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box('firsttime');
     final locationRepository = locator.get<LocationRepository>();
-    var a = (MediaQuery.of(context).size.height) - 220;
     return Scaffold(
-      appBar: locationRepository.AppbarAlarmWidget(locationRepository, context),
+      appBar: locationRepository.appbarAlarmWidget(locationRepository, context),
       body: SafeArea(
         child: BlocBuilder<ListCubit, List<busStop>>(
           builder: (context, state) {
@@ -26,21 +26,21 @@ class AlarmList extends StatelessWidget {
                 color: backgroundColor,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       "Lütfen Durak Seçiniz.",
                       style: Constant.busStopTitleStyle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Divider(
+                    const Divider(
                       color: Colors.white,
                       height: 1,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Expanded(
@@ -52,31 +52,35 @@ class AlarmList extends StatelessWidget {
                             onTap: () {
                               context.read<AlarmNameCubit>().setAlarm(index);
                               Navigator.pop(context);
+                              box.put("firsttime", true);
                             },
                             leading: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Container(
                                 width: 40,
                                 height: 40,
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFFe0f2f1)),
                                 child: Center(
                                     child: Text(
                                   state[index].busstopid.toString(),
                                   style: Constant.busStopTitleRedStyle,
                                 )),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFFe0f2f1)),
                               ),
                             ),
                             title: Text(
                               state[index].name,
                               style: Constant.busStopTitleStyle,
                             ),
-                            trailing: Icon(Icons.arrow_right),
+                            trailing: const Icon(
+                              Icons.arrow_right,
+                              color: Colors.white,
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
-                          return Divider(
+                          return const Divider(
                             height: 1,
                             color: Colors.white,
                           );

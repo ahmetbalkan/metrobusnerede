@@ -11,6 +11,7 @@ class UpdateDistanceNextStopEvent extends DistanceNextStopEvent {
   final String nextStopName;
   final LocationData position;
   final int way;
+
   const UpdateDistanceNextStopEvent(
       {required this.nextStopName, required this.position, required this.way});
 

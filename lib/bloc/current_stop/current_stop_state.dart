@@ -9,11 +9,11 @@ abstract class CurrentStopState extends Equatable {
 }
 
 class CurrentStopInitial extends CurrentStopState {
-  CurrentStopInitial({required String firstValue})
+  const CurrentStopInitial({required String firstValue})
       : super(nextStop: firstValue);
 }
 
 class MyCurrentStopState extends CurrentStopState {
-  MyCurrentStopState({required String NextStopValue})
-      : super(nextStop: NextStopValue);
+  const MyCurrentStopState({required String nextStopValue})
+      : super(nextStop: nextStopValue);
 }

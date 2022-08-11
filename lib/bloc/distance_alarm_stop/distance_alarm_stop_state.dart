@@ -9,11 +9,11 @@ abstract class DistanceAlarmStopState extends Equatable {
 }
 
 class DistanceAlarmStopInitial extends DistanceAlarmStopState {
-  DistanceAlarmStopInitial({required int firstValue})
+  const DistanceAlarmStopInitial({required int firstValue})
       : super(nextStop: firstValue);
 }
 
 class MyDistanceAlarmStopState extends DistanceAlarmStopState {
-  MyDistanceAlarmStopState({required int NextStopValue})
-      : super(nextStop: NextStopValue);
+  const MyDistanceAlarmStopState({required int nextStopValue})
+      : super(nextStop: nextStopValue);
 }

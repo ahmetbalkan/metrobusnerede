@@ -1,57 +1,67 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:location_distance_calculator/location_distance_calculator.dart';
-import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/location.dart';
 import 'dart:math';
-import '../../models/busStop.dart';
+
+import '../../models/bus_stop.dart';
 import '../../repository/repository.dart';
 
 part 'next_stop_event.dart';
 part 'next_stop_state.dart';
 
 class NextStopBloc extends Bloc<NextStopEvent, NextStopState> {
-  NextStopBloc() : super(NextStopInitial(firstValue: "Yükleniyor.")) {
+  NextStopBloc() : super(const NextStopInitial(firstValue: "Yükleniyor.")) {
     final locationRepository = LocationRepository();
     List<busStop> busStoplist = [];
     List<double> distanceList = [];
-    int count = 0;
-    int nearWay = 0;
+
     on<UpdateNextStopEvent>((event, emit) async {
+      var box = Hive.box('firsttime');
+      bool? a = await box.get("firsttime");
       int way = event.way;
-      if (event != null) {
-        busStoplist = await locationRepository.BusStopList();
+      busStoplist = await locationRepository.busStopList();
 
-        for (var i = 0; i < busStoplist.length; i++) {
-          double distance = await calculateDistance(
-            event.position.latitude,
-            event.position.longitude,
-            busStoplist[i].latitude,
-            busStoplist[i].longitude,
-          );
-          distanceList.add(distance);
-        }
+      for (var i = 0; i < busStoplist.length; i++) {
+        double distance = await calculateDistance(
+          event.position.latitude,
+          event.position.longitude,
+          busStoplist[i].latitude,
+          busStoplist[i].longitude,
+        );
+        distanceList.add(distance);
+      }
 
-        double minDistance = await findMin(distanceList);
+      double minDistance = await findMin(distanceList);
 
-        for (var i = 0; i < distanceList.length; i++) {
-          if (distanceList[i] == minDistance) {
+      for (var i = 0; i < distanceList.length; i++) {
+        if (distanceList[i] == minDistance) {
+          if (a == true) {
             if (way == 0) {
-              if (minDistance < busStoplist[i].check / 2) {
-                emit(MyNextStopState(NextStopValue: busStoplist[i + 1].name));
-              }
+              emit(MyNextStopState(nextStopValue: busStoplist[i + 1].name));
             }
             if (way == 1) {
-              if (minDistance < busStoplist[i].check / 2) {
-                emit(MyNextStopState(NextStopValue: busStoplist[i - 1].name));
-              }
+              emit(MyNextStopState(nextStopValue: busStoplist[i - 1].name));
+            }
+            await box.put("firsttime", false);
+          }
+
+          if (way == 0) {
+            if (minDistance < busStoplist[i].check / 2) {
+              emit(MyNextStopState(nextStopValue: busStoplist[i + 1].name));
+            }
+          }
+          if (way == 1) {
+            if (minDistance < busStoplist[i].check / 2) {
+              emit(MyNextStopState(nextStopValue: busStoplist[i - 1].name));
             }
           }
         }
-
-        busStoplist.clear();
-        distanceList.clear();
       }
+
+      busStoplist.clear();
+      distanceList.clear();
     });
   }
 

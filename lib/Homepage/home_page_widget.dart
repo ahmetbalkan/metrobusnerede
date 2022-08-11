@@ -1,11 +1,9 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/Material.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metrobusnerede/locator.dart';
 import '../../constant/color.dart';
 import '../../constant/constant.dart';
-import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import '../leftside/homepage_left.dart';
 import '../repository/repository.dart';
 import '../rightside/homepage_right.dart';
@@ -16,11 +14,36 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locationRepository = locator.get<LocationRepository>();
+
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Bildirim İzni"),
+            content: const Text("Bildirimlere izin vermeniz gerekmektedir."),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("İzin Verme"),
+              ),
+              TextButton(
+                onPressed: () => AwesomeNotifications()
+                    .requestPermissionToSendNotifications()
+                    .then((_) => Navigator.pop(context)),
+                child: const Text("İzin Ver"),
+              ),
+            ],
+          ),
+        );
+      }
+    });
+
     Future.delayed(
         Duration.zero, () => locationRepository.showWayDialog(context));
     //int _secilenMenu = 0;
     return Scaffold(
-      appBar: locationRepository.AppbarWidget(locationRepository, context),
+      appBar: locationRepository.appbarWidget(locationRepository, context),
       backgroundColor: backgroundColor,
       body: Row(children: [
         Expanded(
@@ -46,7 +69,7 @@ class MyHomePage extends StatelessWidget {
                         width: Constant.borderSize, color: borderColor),
                   ),
                 ),
-                child: HomepageRight())),
+                child: const HomepageRight())),
       ]),
     );
   }
