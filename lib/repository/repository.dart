@@ -253,36 +253,17 @@ class LocationRepository {
                 Icon(
                   Icons.change_circle,
                   size: 35,
+                  color: Colors.white,
                 ),
                 Text(
                   "Yönü Değiştir",
-                  style: TextStyle(fontSize: 10),
+                  style: TextStyle(fontSize: 10, color: Colors.white),
                 )
               ],
             ),
           ),
         ),
       ],
-      leading: InkWell(
-        onTap: () {
-          createAlarmNotification("name");
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Column(
-            children: const [
-              Icon(
-                Icons.menu,
-                size: 35,
-              ),
-              Text(
-                "Menü",
-                style: TextStyle(fontSize: 10),
-              )
-            ],
-          ),
-        ),
-      ),
       title: Column(
         children: [
           Center(
@@ -300,28 +281,6 @@ class LocationRepository {
   AppBar appbarAlarmWidget(
       LocationRepository locationRepository, BuildContext context) {
     return AppBar(
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20, bottom: 5),
-          child: InkWell(
-            onTap: () {
-              showWayDialog(context);
-            },
-            child: Column(
-              children: const [
-                Icon(
-                  Icons.settings,
-                  size: 35,
-                ),
-                Text(
-                  "Alarm Ayarları",
-                  style: TextStyle(fontSize: 10),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
       title: Column(
         children: [
           Center(

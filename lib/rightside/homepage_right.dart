@@ -1,10 +1,12 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:lottie/lottie.dart';
 import 'package:metrobusnerede/alarm_list.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import 'package:metrobusnerede/notofications.dart';
+import 'package:vibration/vibration.dart';
 import '../bloc/current_stop/current_stop_bloc.dart';
 import '../bloc/distance_alarm_stop/distance_alarm_stop_bloc.dart';
 import '../bloc/distance_next_stop/distance_next_stop_bloc.dart';
@@ -39,12 +41,12 @@ class HomepageRight extends StatelessWidget {
           context.watch<LeftListBloc>().add(UpdateLeftListEvent(
               nextStopName: context.watch<NextStopBloc>().state.nextStop,
               way: context.watch<WayCounterBlocCubit>().state.way));
-          context
-              .watch<DistanceAlarmStopBloc>()
-              .add(UpdateDistanceAlarmStopEvent(
-                alarmStopName: context.watch<AlarmNameCubit>().state.alarmname,
-                position: currentlocation.position,
-              ));
+          context.watch<DistanceAlarmStopBloc>().add(
+              UpdateDistanceAlarmStopEvent(
+                  alarmStopName:
+                      context.watch<AlarmNameCubit>().state.alarmname,
+                  position: currentlocation.position,
+                  context: context));
 
           try {
             return Container(
@@ -174,7 +176,6 @@ class HomepageRight extends StatelessWidget {
                   ElevatedButton(
                     style: Constant.buttonStyle,
                     onPressed: () {
-                      createAlarmNotification("name");
                       Navigator.push(
                           context,
                           MaterialPageRoute(

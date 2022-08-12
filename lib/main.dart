@@ -21,8 +21,11 @@ import 'locator.dart';
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox('firsttime');
+  await Hive.openBox('notif');
   var box = Hive.box('firsttime');
+  var box2 = Hive.box('notif');
   box.put("firsttime", true);
+  box2.put("notif", true);
   locatorMethod();
   AwesomeNotifications().initialize(
       // set the icon to null if you want to use the default app icon

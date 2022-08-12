@@ -9,6 +9,7 @@
 import 'package:audio_service_web/audio_service_web.dart';
 import 'package:audio_session/audio_session_web.dart';
 import 'package:location_web/location_web.dart';
+import 'package:vibration_web/vibration_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
@@ -17,5 +18,6 @@ void registerPlugins(Registrar registrar) {
   AudioServiceWeb.registerWith(registrar);
   AudioSessionWeb.registerWith(registrar);
   LocationWebPlugin.registerWith(registrar);
+  VibrationWebPlugin.registerWith(registrar);
   registrar.registerMessageHandler();
 }
