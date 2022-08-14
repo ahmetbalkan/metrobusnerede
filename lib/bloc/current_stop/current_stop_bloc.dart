@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:metrobusnerede/location.dart';
+import 'package:location/location.dart';
+
 import 'dart:math';
 import '../../models/bus_stop.dart';
 import '../../models/next_stop_name_distance.dart';

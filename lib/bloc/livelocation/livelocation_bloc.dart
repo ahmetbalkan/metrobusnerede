@@ -2,16 +2,18 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
+import '../../locator.dart';
 import '../../repository/repository.dart';
 part 'livelocation_event.dart';
 part 'livelocation_state.dart';
 
 class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
-  final locationRepository = LocationRepository();
+  final locationRepository = locator.get<LocationRepository>();
+  final location = locator.get<Location>();
   LivelocationBloc() : super(LivelocationLoading()) {
     settings();
     on<LoadLocationEvent>((event, emit) async {
-      Location.instance.onLocationChanged.listen((event) async {
+      location.onLocationChanged.listen((event) async {
         add(UpdateLocationEvent(position: event));
       });
     });
@@ -21,13 +23,13 @@ class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
   }
 
   void settings() async {
-    bool a = await Location.instance.serviceEnabled();
+    bool a = await location.serviceEnabled();
 
     if (a == false) {
-      Location.instance.requestService();
+      location.requestService();
     }
-    Location.instance.enableBackgroundMode();
-    Location.instance.changeNotificationOptions(
+    location.enableBackgroundMode();
+    location.changeNotificationOptions(
       channelName: "MetrobusNeredeLocation",
       title: "Metrobüs Nerede?",
       iconName: '@drawable/metrobuslogo',
@@ -37,7 +39,7 @@ class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
           "Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.",
     );
 
-    Location.instance.changeSettings(
+    location.changeSettings(
         accuracy: LocationAccuracy.high, distanceFilter: 10, interval: 1000);
   }
 }

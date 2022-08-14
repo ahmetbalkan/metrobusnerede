@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
-import 'package:metrobusnerede/notofications.dart';
+import 'package:metrobusnerede/notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../constant/constant.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
@@ -69,7 +69,7 @@ class LocationRepository {
   void showWayDialog(BuildContext context) {
     var box = Hive.box('firsttime');
     showDialog(
-      barrierColor: Colors.black87,
+      barrierColor: Colors.black54,
       barrierDismissible: false,
       context: context,
       builder: (context) {
@@ -228,6 +228,83 @@ class LocationRepository {
                     textAlign: TextAlign.center,
                     "Seçim yapmadan bu bölümü geçemessiniz.",
                     style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ]),
+              )),
+        );
+      },
+    );
+  }
+
+  void permSettingDialog(BuildContext context) {
+    showDialog(
+      barrierColor: Colors.black54,
+      context: context,
+      builder: (context) {
+        return Expanded(
+          child: Dialog(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              backgroundColor: backgroundColor,
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Uygulamanın sağlıklı çalışabilmesi için location iznini vermeniz gerekmektedir.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Image.asset("assets/permission.png"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            openAppSettings();
+                          },
+                          child: Text("Ayarları Aç")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Kapat")),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,

@@ -53,7 +53,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text("Bildirim İzni"),
-            content: const Text("Bildirimlere izin vermeniz gerekmektedir."),
+            content: const Text(
+                "Alarm olarak ayarladığınız durakta size haber verebilmemiz için bildirimlere izin vermeniz gerekiyor."),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
