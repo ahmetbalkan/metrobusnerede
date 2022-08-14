@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:metrobusnerede/alarm_list.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
+import 'package:metrobusnerede/locator.dart';
 
 import '../bloc/current_stop/current_stop_bloc.dart';
 import '../bloc/distance_alarm_stop/distance_alarm_stop_bloc.dart';
@@ -13,12 +14,14 @@ import '../bloc/next_stop/next_stop_bloc.dart';
 import '../constant/constant.dart';
 import '../cubit/alarm_name_cubit/alarm_name_cubit.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
+import '../repository/repository.dart';
 
 class HomepageRight extends StatelessWidget {
   const HomepageRight({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final locationRepository = locator.get<LocationRepository>();
     return BlocBuilder<LivelocationBloc, LivelocationState>(
       builder: (context, currentlocation) {
         if (currentlocation is LivelocationLoading) {
@@ -51,6 +54,21 @@ class HomepageRight extends StatelessWidget {
               color: backgroundColor,
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          "assets/logo.png",
+                          width: 150,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
                     child: BlocBuilder<CurrentStopBloc, CurrentStopState>(
@@ -86,6 +104,7 @@ class HomepageRight extends StatelessWidget {
                                       Text(
                                         currentEvent.nextStop,
                                         style: Constant.ledTextGreenStyle,
+                                        textAlign: TextAlign.center,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 15),

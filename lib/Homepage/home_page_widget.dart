@@ -75,35 +75,50 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     Future.delayed(
         Duration.zero, () => locationRepository.showWayDialog(context));
     //int _secilenMenu = 0;
-    return Scaffold(
-      appBar: locationRepository.appbarWidget(locationRepository, context),
-      backgroundColor: backgroundColor,
-      body: Row(children: [
-        Expanded(
-            flex: 3,
-            child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
-                    width: Constant.borderSize,
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            locationRepository.showWayDialog(context);
+          },
+          label: Text(
+            'Yön Değiştir',
+            style: Constant.floatButtonText,
+          ),
+          icon: Icon(
+            Icons.change_circle,
+            color: backgroundColor,
+          ),
+          backgroundColor: Colors.white,
+        ),
+        backgroundColor: backgroundColor,
+        body: Row(children: [
+          Expanded(
+              flex: 3,
+              child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                      width: Constant.borderSize,
+                    ),
                   ),
-                ),
-                child: const HomepageLeft())),
-        Expanded(
-            flex: 7,
-            child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: Constant.borderSize, color: borderColor),
-                    right: BorderSide(
-                        width: Constant.borderSize, color: borderColor),
-                    top: BorderSide(
-                        width: Constant.borderSize, color: borderColor),
+                  child: const HomepageLeft())),
+          Expanded(
+              flex: 7,
+              child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: Constant.borderSize, color: borderColor),
+                      right: BorderSide(
+                          width: Constant.borderSize, color: borderColor),
+                      top: BorderSide(
+                          width: Constant.borderSize, color: borderColor),
+                    ),
                   ),
-                ),
-                child: const HomepageRight())),
-      ]),
+                  child: const HomepageRight())),
+        ]),
+      ),
     );
   }
 }

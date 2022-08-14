@@ -18,6 +18,10 @@ class Constant {
       fontSize: ScreenUtil().setSp(20),
       color: backgroundColor,
       fontFamily: 'Armata');
+  static final floatButtonText = TextStyle(
+      fontSize: ScreenUtil().setSp(15),
+      color: backgroundColor,
+      fontFamily: 'Armata');
   static final buttonText = TextStyle(
       fontSize: ScreenUtil().setSp(25),
       color: backgroundColor,

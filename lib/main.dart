@@ -63,6 +63,7 @@ void main() async {
       statusBarBrightness: Brightness.dark,
       systemNavigationBarColor: backgroundColor,
       systemNavigationBarIconBrightness: Brightness.dark));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
