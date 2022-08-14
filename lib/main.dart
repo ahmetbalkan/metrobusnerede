@@ -11,6 +11,8 @@ import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/bloc/livelocation/livelocation_bloc.dart';
 import 'package:metrobusnerede/bloc/next_stop/next_stop_bloc.dart';
 import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
+import 'package:metrobusnerede/permission_page.dart';
+import 'package:metrobusnerede/repository/repository.dart';
 import 'Homepage/home_page_widget.dart';
 import 'bloc/current_stop/current_stop_bloc.dart';
 import 'constant/color.dart';
@@ -27,6 +29,7 @@ void main() async {
   box.put("firsttime", true);
   box2.put("notif", true);
   locatorMethod();
+
   AwesomeNotifications().initialize(
       // set the icon to null if you want to use the default app icon
       'resource://drawable/metrobuslogo',
@@ -68,6 +71,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locationRepository = locator.get<LocationRepository>();
     return ScreenUtilInit(
         designSize: const Size(444, 781),
         builder: (context, child) {
@@ -105,7 +109,23 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Armata',
                 primarySwatch: materialBackgroundColor,
               ),
-              home: const MyHomePage(),
+              home: FutureBuilder<bool>(
+                future: locationRepository.permCheck(),
+                builder: (context, snapshot) {
+                  print(snapshot.data);
+                  if (snapshot.hasData) {
+                    return snapshot.data == true
+                        ? const MyHomePage()
+                        : const PermissionPage();
+                  } else if (snapshot.hasError) {
+                    return Text("snapshot.error");
+                  } else {
+                    return Scaffold(
+                        backgroundColor: backgroundColor,
+                        body: CircularProgressIndicator());
+                  }
+                },
+              ),
             ),
           );
         });

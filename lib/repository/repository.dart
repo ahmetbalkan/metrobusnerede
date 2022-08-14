@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import 'package:metrobusnerede/notofications.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../constant/constant.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import '../models/bus_stop.dart';
@@ -309,5 +310,15 @@ class LocationRepository {
   int idGenerator() {
     final now = DateTime.now();
     return now.millisecondsSinceEpoch;
+  }
+
+  Future<bool> permCheck() async {
+    var a = await Permission.location.status;
+    var b = await Permission.locationAlways.status;
+    if (a == PermissionStatus.granted && b == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
