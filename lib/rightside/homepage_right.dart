@@ -43,7 +43,7 @@ class _HomepageRightState extends State<HomepageRight> {
         if (currentlocation is LivelocationLoading) {
           return Scaffold(
               backgroundColor: backgroundColor,
-              body: Center(child: CircularProgressIndicator()));
+              body: const Center(child: CircularProgressIndicator()));
         } else if (currentlocation is LivelocationLoaded) {
           context.watch<CurrentStopBloc>().add(UpdateCurrentStopEvent(
                 position: currentlocation.position,
@@ -68,204 +68,230 @@ class _HomepageRightState extends State<HomepageRight> {
                   context: context));
 
           try {
-            return Container(
-              color: backgroundColor,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Center(
-                          child: Image.asset(
-                            "assets/logo.png",
-                            width: 150,
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Center(
+                            child: Image.asset(
+                              alignment: Alignment.centerLeft,
+                              "assets/logo.png",
+                              width: 150,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
-                    child: BlocBuilder<CurrentStopBloc, CurrentStopState>(
-                      builder: (context, currentEvent) {
-                        return Column(
-                          children: [
-                            currentEvent.nextStop == "ilerliyor"
-                                ? Column(
-                                    children: [
-                                      FittedBox(
-                                          fit: BoxFit.fill,
-                                          child: Lottie.asset(
-                                            'assets/otobus.json',
-                                            width: 100,
-                                            height: 100,
-                                          )),
-                                      Text(
-                                        "Durağa İlerliyorsunuz..",
+                    ),
+                    InkWell(
+                      onTap: () {
+                        locationRepository.showWayDialog(context);
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Icon(
+                            Icons.change_circle,
+                            size: 35,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            "Yönü Değiştir",
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
+                  child: BlocBuilder<CurrentStopBloc, CurrentStopState>(
+                    builder: (context, currentEvent) {
+                      return Column(
+                        children: [
+                          currentEvent.nextStop == "ilerliyor"
+                              ? Column(
+                                  children: [
+                                    FittedBox(
+                                        fit: BoxFit.fill,
+                                        child: Lottie.asset(
+                                          'assets/otobus.json',
+                                          width: 100,
+                                          height: 100,
+                                        )),
+                                    Text(
+                                      "Durağa İlerliyorsunuz..",
+                                      style: Constant.busStopTitleStyle,
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 15),
+                                      child: Text(
+                                        "şu an.",
                                         style: Constant.busStopTitleStyle,
                                       ),
-                                    ],
-                                  )
-                                : Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, bottom: 15),
-                                        child: Text(
-                                          "şu an.",
-                                          style: Constant.busStopTitleStyle,
-                                        ),
+                                    ),
+                                    Text(
+                                      currentEvent.nextStop,
+                                      style: Constant.ledTextGreenStyle,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 15),
+                                      child: Text(
+                                        "Durağındasınız.",
+                                        style: Constant.busStopTitleStyle,
                                       ),
-                                      Text(
-                                        currentEvent.nextStop,
-                                        style: Constant.ledTextGreenStyle,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 15),
-                                        child: Text(
-                                          "Durağındasınız.",
-                                          style: Constant.busStopTitleStyle,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                          ],
-                        );
-                      },
-                    ),
+                                    ),
+                                  ],
+                                ),
+                        ],
+                      );
+                    },
                   ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    "Sonraki Durak",
+                    style: Constant.busStopTitleStyle,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      "Sonraki Durak",
-                      style: Constant.busStopTitleStyle,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: BlocBuilder<NextStopBloc, NextStopState>(
+                    builder: (context, nextStopState) {
+                      return Text(
+                        nextStopState.nextStop.toString(),
+                        style: Constant.ledTextStyle,
+                        textAlign: TextAlign.center,
+                      );
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: BlocBuilder<NextStopBloc, NextStopState>(
-                      builder: (context, nextStopState) {
-                        return Text(
-                          nextStopState.nextStop.toString(),
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    "Kalan Mesafe",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                ),
+                BlocBuilder<DistanceNextStopBloc, DistanceNextStopState>(
+                  builder: (context, distancestate) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        distancestate.nextStop.toString(),
+                        style: Constant.ledTextStyle,
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    "Seçtiğiniz Durak",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: BlocBuilder<AlarmNameCubit, AlarmNameState>(
+                    builder: (context, state) {
+                      return Center(
+                        child: Text(
+                          state.alarmname,
                           style: Constant.ledTextStyle,
                           textAlign: TextAlign.center,
-                        );
-                      },
-                    ),
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(
-                      "Kalan Mesafe",
-                      style: Constant.busStopTitleStyle,
-                    ),
-                  ),
-                  BlocBuilder<DistanceNextStopBloc, DistanceNextStopState>(
-                    builder: (context, distancestate) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          distancestate.nextStop.toString(),
-                          style: Constant.ledTextStyle,
                         ),
                       );
                     },
                   ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
+                ),
+                ElevatedButton(
+                  style: Constant.buttonStyle,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AlarmList()));
+                  },
+                  child: const Text(
+                    'Durak Seç',
+                    style: TextStyle(color: Colors.red),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(
-                      "Seçtiğiniz Durak",
-                      style: Constant.busStopTitleStyle,
-                    ),
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    "Hız",
+                    style: Constant.busStopTitleStyle,
                   ),
-                  Padding(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    (currentlocation.speed.toInt().toString()),
+                    style: Constant.ledTextStyle,
+                  ),
+                ),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    "Durağa Kalan Mesafe",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                ),
+                Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: BlocBuilder<AlarmNameCubit, AlarmNameState>(
+                    child: BlocBuilder<DistanceAlarmStopBloc,
+                        DistanceAlarmStopState>(
                       builder: (context, state) {
-                        return Center(
-                          child: Text(
-                            state.alarmname,
-                            style: Constant.ledTextStyle,
-                            textAlign: TextAlign.center,
-                          ),
+                        return Text(
+                          state.nextStop.toInt().toString(),
+                          style: Constant.ledTextStyle,
                         );
                       },
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: Constant.buttonStyle,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AlarmList()));
-                    },
-                    child: const Text(
-                      'Durak Seç',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(
-                      "Hız",
-                      style: Constant.busStopTitleStyle,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(
-                      currentlocation.position.speed!.toInt().toString(),
-                      style: Constant.ledTextStyle,
-                    ),
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(
-                      "Durağa Kalan Mesafe",
-                      style: Constant.busStopTitleStyle,
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: BlocBuilder<DistanceAlarmStopBloc,
-                          DistanceAlarmStopState>(
-                        builder: (context, state) {
-                          return Text(
-                            state.nextStop.toInt().toString(),
-                            style: Constant.ledTextStyle,
-                          );
-                        },
-                      )),
-                ],
-              ),
+                    )),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+              ],
             );
           } catch (e) {
             return const Text("Yüklenemiyor.");

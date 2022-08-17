@@ -77,13 +77,21 @@ class _PermissionPageState extends State<PermissionPage> {
                                   PermissionStatus noti =
                                       await Permission.notification.request();
                                   if (noti == PermissionStatus.granted) {
+                                    await Future.delayed(
+                                        const Duration(seconds: 1));
+
+                                    if (!mounted) return;
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                MyHomePage()));
+                                                const MyHomePage()));
                                   }
                                   if (noti == PermissionStatus.denied) {
+                                    await Future.delayed(
+                                        const Duration(seconds: 1));
+
+                                    if (!mounted) return;
                                     locationRepository
                                         .permSettingDialog(context);
                                   }

@@ -1,7 +1,7 @@
 # This is a generated file; do not edit or check into version control.
+app_settings=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\app_settings-4.1.8\\
 awesome_notifications=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\awesome_notifications-0.6.21\\
 flutter_local_notifications=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_local_notifications-9.7.1\\
-flutter_ringtone_player=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_ringtone_player-3.2.0\\
 location=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\location-4.4.0\\
 location_distance_calculator=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\location_distance_calculator-0.0.2\\
 location_web=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\location_web-3.1.1\\
@@ -16,5 +16,3 @@ permission_handler=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permi
 permission_handler_android=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler_android-9.0.2+1\\
 permission_handler_apple=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler_apple-9.0.4\\
 permission_handler_windows=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler_windows-0.1.0\\
-vibration=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\vibration-1.7.5\\
-vibration_web=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\vibration_web-1.6.4\\

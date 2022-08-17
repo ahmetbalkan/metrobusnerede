@@ -12,9 +12,10 @@ class LivelocationLoading extends LivelocationState {}
 
 class LivelocationLoaded extends LivelocationState {
   final LocationData position;
-  const LivelocationLoaded({required this.position});
+  final double speed;
+  const LivelocationLoaded({required this.position, required this.speed});
   @override
-  List<Object> get props => [position];
+  List<Object> get props => [position, speed];
 }
 
 class LivelocationError extends LivelocationState {}

@@ -59,26 +59,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     //int _secilenMenu = 0;
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            AwesomeNotifications().createNotification(
-                content: NotificationContent(
-                    id: 10,
-                    channelKey: 'basic_channel',
-                    title: 'Simple Notification',
-                    body: 'Simple body'));
-            locationRepository.showWayDialog(context);
-          },
-          label: Text(
-            'Yön Değiştir',
-            style: Constant.floatButtonText,
-          ),
-          icon: Icon(
-            Icons.change_circle,
-            color: backgroundColor,
-          ),
-          backgroundColor: Colors.white,
-        ),
         backgroundColor: backgroundColor,
         body: Row(children: [
           Expanded(

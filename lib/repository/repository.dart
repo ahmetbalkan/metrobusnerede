@@ -1,12 +1,11 @@
 import 'dart:async';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:vibration/vibration.dart';
 import '../constant/constant.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import '../models/bus_stop.dart';
@@ -61,7 +60,7 @@ class LocationRepository {
     busStopList.add(busStop(36, "ZINCIRLIKUYU", 41.066149, 29.013119, 156));
     busStopList
         .add(busStop(37, "15 TEM. SEH. KOP.", 41.036593, 29.043351, 200));
-    busStopList.add(busStop(37, "BURHANİYE", 41.032020, 29.046939, 105));
+    busStopList.add(busStop(37, "BURHANIYE", 41.032020, 29.046939, 105));
     busStopList.add(busStop(38, "ALTUNIZADE", 41.021904, 29.048345, 300));
     busStopList.add(busStop(39, "ACIBADEM", 41.014534, 29.057279, 230));
     busStopList.add(busStop(40, "UZUNCAYIR", 40.998859, 29.056540, 162));
@@ -263,7 +262,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Uygulamanın sağlıklı çalışabilmesi için location iznini vermeniz gerekmektedir.",
+                    "Bildirim izinleri olmadan alarm sistemi düzgün çalışmaz ve uygulama inmek istediğiniz durakta sizi uyaramaz.",
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -284,7 +283,7 @@ class LocationRepository {
                   const SizedBox(
                     height: 5,
                   ),
-                  Image.asset("assets/permission.png"),
+                  Image.asset("assets/noti.png"),
                   const SizedBox(
                     height: 5,
                   ),
@@ -300,7 +299,7 @@ class LocationRepository {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            openAppSettings();
+                            AppSettings.openNotificationSettings();
                           },
                           child: Text("Ayarları Aç")),
                       ElevatedButton(
@@ -396,90 +395,13 @@ class LocationRepository {
   Future<bool> permCheck() async {
     var a = await Permission.location.status;
     var b = await Permission.locationAlways.status;
-    if (a == PermissionStatus.granted && b == PermissionStatus.granted) {
+    var c = await Permission.notification.status;
+    if (a == PermissionStatus.granted &&
+        b == PermissionStatus.granted &&
+        c == PermissionStatus.granted) {
       return true;
     } else {
       return false;
-    }
-  }
-
-  void showAlarmDialog(BuildContext context, String name) async {
-    var box2 = Hive.box('notif');
-    bool notif = box2.get("notif");
-    if (notif) {
-      FlutterRingtonePlayer.play(
-          android: AndroidSounds.alarm, ios: IosSounds.glass, looping: true);
-      Vibration.vibrate(
-        repeat: 0,
-        pattern: [500, 1000, 500, 2000, 500, 3000, 500, 500],
-      );
-      showDialog(
-        barrierColor: Colors.black87,
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return Expanded(
-            child: Dialog(
-                shape: const RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                backgroundColor: backgroundColor,
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      textAlign: TextAlign.center,
-                      "Gitmek İstediğiniz durağa vardınız..",
-                      style: Constant.busStopTitleStyle,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      color: Colors.white,
-                      thickness: 1,
-                    ),
-                    const Icon(
-                      Icons.warning,
-                      size: 70,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      color: Colors.white,
-                      thickness: 1,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    ElevatedButton(
-                      child: Text("Kapat"),
-                      onPressed: () {
-                        FlutterRingtonePlayer.stop();
-                        Vibration.cancel();
-                        Navigator.pop(context);
-                      },
-                    ),
-                    Text(
-                      textAlign: TextAlign.center,
-                      "Ayarlardan alarm muziğini değiştirerek alarm sesini özelleştirebilirsiniz.",
-                      style: Constant.busStopTitleStyle,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ]),
-                )),
-          );
-        },
-      );
-      box2.put("notif", false);
     }
   }
 }

@@ -18,7 +18,8 @@ class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
       });
     });
     on<UpdateLocationEvent>((event, emit) {
-      emit(LivelocationLoaded(position: event.position));
+      double speed = (event.position.speed! * 18) / 5;
+      emit(LivelocationLoaded(position: event.position, speed: speed));
     });
   }
 

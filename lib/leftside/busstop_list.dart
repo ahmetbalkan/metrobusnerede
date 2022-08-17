@@ -16,7 +16,7 @@ class busstop_list extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var a = ((MediaQuery.of(context).size.height) - 110.h) / 43.h;
+    var a = ((MediaQuery.of(context).size.height) - 210.h) / 43.h;
     print(a);
     int way = context.watch<WayCounterBlocCubit>().state.way;
 

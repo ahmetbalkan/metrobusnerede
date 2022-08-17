@@ -36,8 +36,9 @@ class LocalNotificationService {
 
   Future<NotificationDetails> _notificationDetails() async {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel_id', 'channel_name',
-            channelDescription: 'description',
+        AndroidNotificationDetails('channel_id', 'Metrobüs Nerede Durak Alarmi',
+            channelDescription:
+                'Durakları bu bildirim sayesinde bildirim olarak alırsınız.',
             importance: Importance.max,
             priority: Priority.max,
             sound: RawResourceAndroidNotificationSound("noti"),

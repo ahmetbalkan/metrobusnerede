@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/Material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:metrobusnerede/constant/color.dart';
@@ -35,7 +37,7 @@ class Constant {
       fontFamily: 'Led');
 
   static final ledTextGreenStyle = TextStyle(
-      fontSize: ScreenUtil().setSp(24),
+      fontSize: ScreenUtil().setSp(18),
       color: Colors.greenAccent,
       fontFamily: 'Led');
   static final wayDialogBlackStyle = TextStyle(
@@ -51,6 +53,6 @@ class Constant {
   static final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
     primary: Colors.white,
     textStyle: const TextStyle(
-        fontSize: 18, color: Colors.red, fontWeight: FontWeight.normal),
+        fontSize: 15, color: Colors.red, fontWeight: FontWeight.normal),
   );
 }
