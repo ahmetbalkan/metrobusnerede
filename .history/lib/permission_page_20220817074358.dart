@@ -119,4 +119,22 @@ class _PermissionPageState extends State<PermissionPage> {
       ),
     );
   }
+
+  Future<String> getCheckNotificationPermStatus() {
+    return NotificationPermissions.getNotificationPermissionStatus()
+        .then((status) {
+      switch (status) {
+        case PermissionStatus.denied:
+          return permDenied;
+        case PermissionStatus.granted:
+          return permGranted;
+        case PermissionStatus.unknown:
+          return permUnknown;
+        case PermissionStatus.provisional:
+          return permProvisional;
+        default:
+          return null;
+      }
+    });
+  }
 }

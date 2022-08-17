@@ -1,15 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
-import 'package:metrobusnerede/notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:vibration/vibration.dart';
 import '../constant/constant.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
 import '../models/bus_stop.dart';
 
 class LocationRepository {
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   Future<List<busStop>> busStopList() async {
     List<busStop> busStopList = [];
     busStopList.add(busStop(0, "B.DUZU SONDURAK", 41.022019, 28.625050, 168));
@@ -396,6 +400,86 @@ class LocationRepository {
       return true;
     } else {
       return false;
+    }
+  }
+
+  void showAlarmDialog(BuildContext context, String name) async {
+    var box2 = Hive.box('notif');
+    bool notif = box2.get("notif");
+    if (notif) {
+      FlutterRingtonePlayer.play(
+          android: AndroidSounds.alarm, ios: IosSounds.glass, looping: true);
+      Vibration.vibrate(
+        repeat: 0,
+        pattern: [500, 1000, 500, 2000, 500, 3000, 500, 500],
+      );
+      showDialog(
+        barrierColor: Colors.black87,
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return Expanded(
+            child: Dialog(
+                shape: const RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                backgroundColor: backgroundColor,
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Gitmek İstediğiniz durağa vardınız..",
+                      style: Constant.busStopTitleStyle,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Divider(
+                      color: Colors.white,
+                      thickness: 1,
+                    ),
+                    const Icon(
+                      Icons.warning,
+                      size: 70,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Divider(
+                      color: Colors.white,
+                      thickness: 1,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    ElevatedButton(
+                      child: Text("Kapat"),
+                      onPressed: () {
+                        FlutterRingtonePlayer.stop();
+                        Vibration.cancel();
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Ayarlardan alarm muziğini değiştirerek alarm sesini özelleştirebilirsiniz.",
+                      style: Constant.busStopTitleStyle,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ]),
+                )),
+          );
+        },
+      );
+      box2.put("notif", false);
     }
   }
 }

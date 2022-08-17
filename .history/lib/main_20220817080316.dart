@@ -43,10 +43,6 @@ void main() async {
             channelGroupKey: 'basic_channel_group',
             channelKey: 'basic_channel',
             channelName: 'Basic notifications',
-            playSound: true,
-            soundSource: "resource://raw/noti",
-            enableVibration: true,
-            vibrationPattern: mediumVibrationPattern,
             channelDescription: 'Notification channel for basic tests',
             defaultColor: Color(0xFF9D50DD),
             ledColor: Colors.white)

@@ -44,9 +44,7 @@ void main() async {
             channelKey: 'basic_channel',
             channelName: 'Basic notifications',
             playSound: true,
-            soundSource: "resource://raw/noti",
-            enableVibration: true,
-            vibrationPattern: mediumVibrationPattern,
+            soundSource: "resource://raw/res_morph_power_rangers",
             channelDescription: 'Notification channel for basic tests',
             defaultColor: Color(0xFF9D50DD),
             ledColor: Colors.white)

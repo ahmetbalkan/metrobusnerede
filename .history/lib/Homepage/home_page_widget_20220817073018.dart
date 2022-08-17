@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -24,6 +23,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     service = LocalNotificationService();
+    Permission.notification.request();
     service.intialize();
     super.initState();
   }
@@ -61,12 +61,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       child: Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            AwesomeNotifications().createNotification(
-                content: NotificationContent(
-                    id: 10,
-                    channelKey: 'basic_channel',
-                    title: 'Simple Notification',
-                    body: 'Simple body'));
+            service.showScheduledNotification(
+                id: 1, title: "title", body: "body", seconds: 1);
             locationRepository.showWayDialog(context);
           },
           label: Text(

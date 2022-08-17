@@ -43,10 +43,6 @@ void main() async {
             channelGroupKey: 'basic_channel_group',
             channelKey: 'basic_channel',
             channelName: 'Basic notifications',
-            playSound: true,
-            soundSource: "resource://raw/noti",
-            enableVibration: true,
-            vibrationPattern: mediumVibrationPattern,
             channelDescription: 'Notification channel for basic tests',
             defaultColor: Color(0xFF9D50DD),
             ledColor: Colors.white)
@@ -58,15 +54,6 @@ void main() async {
             channelGroupName: 'Basic group')
       ],
       debug: true);
-
-  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-    if (!isAllowed) {
-      // This is just a basic example. For real apps, you must show some
-      // friendly dialog box before call the request method.
-      // This is very important to not harm the user experience
-      AwesomeNotifications().requestPermissionToSendNotifications();
-    }
-  });
 
   AndroidInitializationSettings androidInitializationSettings =
       const AndroidInitializationSettings(

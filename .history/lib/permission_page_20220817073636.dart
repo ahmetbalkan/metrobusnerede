@@ -84,7 +84,7 @@ class _PermissionPageState extends State<PermissionPage> {
                                                 MyHomePage()));
                                   }
                                   if (noti == PermissionStatus.denied) {
-                                    locationRepository
+                                    PermissionStatus noti = locationRepository
                                         .permSettingDialog(context);
                                   }
                                 }

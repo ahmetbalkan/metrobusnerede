@@ -83,10 +83,6 @@ class _PermissionPageState extends State<PermissionPage> {
                                             builder: (context) =>
                                                 MyHomePage()));
                                   }
-                                  if (noti == PermissionStatus.denied) {
-                                    locationRepository
-                                        .permSettingDialog(context);
-                                  }
                                 }
                                 if (location == PermissionStatus.denied) {}
                                 if (location ==

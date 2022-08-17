@@ -1,7 +1,9 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:metrobusnerede/alarm_list.dart';
+import 'package:metrobusnerede/bloc/alarm_bloc/alarm_bloc.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import 'package:metrobusnerede/locator.dart';
@@ -14,10 +16,24 @@ import '../bloc/next_stop/next_stop_bloc.dart';
 import '../constant/constant.dart';
 import '../cubit/alarm_name_cubit/alarm_name_cubit.dart';
 import '../cubit/way_counter_bloc/way_counter_bloc_cubit.dart';
+import '../notification.dart';
 import '../repository/repository.dart';
 
-class HomepageRight extends StatelessWidget {
+class HomepageRight extends StatefulWidget {
   const HomepageRight({Key? key}) : super(key: key);
+
+  @override
+  State<HomepageRight> createState() => _HomepageRightState();
+}
+
+class _HomepageRightState extends State<HomepageRight> {
+  late final LocalNotificationService service;
+  @override
+  void initState() {
+    service = LocalNotificationService();
+    service.intialize();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +43,7 @@ class HomepageRight extends StatelessWidget {
         if (currentlocation is LivelocationLoading) {
           return Scaffold(
               backgroundColor: backgroundColor,
-              body: CircularProgressIndicator());
+              body: Center(child: CircularProgressIndicator()));
         } else if (currentlocation is LivelocationLoaded) {
           context.watch<CurrentStopBloc>().add(UpdateCurrentStopEvent(
                 position: currentlocation.position,
@@ -42,6 +58,8 @@ class HomepageRight extends StatelessWidget {
           context.watch<LeftListBloc>().add(UpdateLeftListEvent(
               nextStopName: context.watch<NextStopBloc>().state.nextStop,
               way: context.watch<WayCounterBlocCubit>().state.way));
+          context.watch<AlarmBloc>().add(LoadAlarmEvent(
+              alarm: context.watch<AlarmNameCubit>().state.alarmname));
           context.watch<DistanceAlarmStopBloc>().add(
               UpdateDistanceAlarmStopEvent(
                   alarmStopName:
@@ -57,10 +75,13 @@ class HomepageRight extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Center(
-                        child: Image.asset(
-                          "assets/logo.png",
-                          width: 150,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Center(
+                          child: Image.asset(
+                            "assets/logo.png",
+                            width: 150,
+                          ),
                         ),
                       ),
                     ],

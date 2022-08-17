@@ -14,7 +14,6 @@ class AlarmList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var box = Hive.box('firsttime');
     var box2 = Hive.box('notif');
     final locationRepository = locator.get<LocationRepository>();
     return Scaffold(
@@ -53,7 +52,6 @@ class AlarmList extends StatelessWidget {
                             onTap: () {
                               context.read<AlarmNameCubit>().setAlarm(index);
                               Navigator.pop(context);
-                              box.put("firsttime", true);
                               box2.put("notif", true);
                             },
                             leading: Padding(

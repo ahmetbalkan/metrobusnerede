@@ -84,8 +84,14 @@ class _PermissionPageState extends State<PermissionPage> {
                                                 MyHomePage()));
                                   }
                                   if (noti == PermissionStatus.denied) {
-                                    locationRepository
-                                        .permSettingDialog(context);
+                                    NotificationPermissions.requestNotificationPermissions(
+                                iosSettings: const NotificationSettingsIos(
+                                    sound: true, badge: true, alert: true))
+                            .then((_) {
+                          // when finished, check the permission status
+                          setState(() {
+                            permissionStatusFuture =
+                                getCheckNotificationPermStatus();
                                   }
                                 }
                                 if (location == PermissionStatus.denied) {}
@@ -118,5 +124,23 @@ class _PermissionPageState extends State<PermissionPage> {
         ),
       ),
     );
+  }
+
+  Future<String> getCheckNotificationPermStatus() {
+    return NotificationPermissions.getNotificationPermissionStatus()
+        .then((status) {
+      switch (status) {
+        case PermissionStatus.denied:
+          return permDenied;
+        case PermissionStatus.granted:
+          return permGranted;
+        case PermissionStatus.unknown:
+          return permUnknown;
+        case PermissionStatus.provisional:
+          return permProvisional;
+        default:
+          return null;
+      }
+    });
   }
 }
