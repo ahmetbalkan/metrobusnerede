@@ -119,46 +119,54 @@ class _HomepageRightState extends State<HomepageRight> {
                   padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
                   child: BlocBuilder<CurrentStopBloc, CurrentStopState>(
                     builder: (context, currentEvent) {
-                      return Column(
+                      return Stack(
+                        alignment: Alignment.center,
                         children: [
-                          currentEvent.nextStop == "ilerliyor"
-                              ? Column(
-                                  children: [
-                                    Lottie.asset(
-                                      'assets/otobus.json',
-                                      width: 300,
-                                      height: 100,
+                          Column(
+                            children: [
+                              currentEvent.nextStop == "ilerliyor"
+                                  ? Column(
+                                      children: [
+                                        FittedBox(
+                                            fit: BoxFit.fill,
+                                            child: Lottie.asset(
+                                              'assets/otobus.json',
+                                              width: 100,
+                                              height: 100,
+                                            )),
+                                        Text(
+                                          "Durağa İlerliyorsunuz..",
+                                          style: Constant.busStopTitleStyle,
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 5, bottom: 10),
+                                          child: Text(
+                                            "şu an.",
+                                            style: Constant.busStopTitleStyle,
+                                          ),
+                                        ),
+                                        Text(
+                                          currentEvent.nextStop,
+                                          style: Constant.ledTextGreenStyle,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          child: Text(
+                                            "Durağındasınız.",
+                                            style: Constant.busStopTitleStyle,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      "Durağa İlerliyorsunuz..",
-                                      style: Constant.busStopTitleStyle,
-                                    ),
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 5, bottom: 10),
-                                      child: Text(
-                                        "şu an.",
-                                        style: Constant.busStopTitleStyle,
-                                      ),
-                                    ),
-                                    Text(
-                                      currentEvent.nextStop,
-                                      style: Constant.ledTextGreenStyle,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Text(
-                                        "Durağındasınız.",
-                                        style: Constant.busStopTitleStyle,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            ],
+                          ),
                         ],
                       );
                     },

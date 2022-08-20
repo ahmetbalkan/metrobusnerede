@@ -113,7 +113,7 @@ class _HomepageRightState extends State<HomepageRight> {
                 ),
                 const Divider(
                   color: Colors.white,
-                  thickness: 1,
+                  thickness: 0.7,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
@@ -124,11 +124,13 @@ class _HomepageRightState extends State<HomepageRight> {
                           currentEvent.nextStop == "ilerliyor"
                               ? Column(
                                   children: [
-                                    Lottie.asset(
-                                      'assets/otobus.json',
-                                      width: 300,
-                                      height: 100,
-                                    ),
+                                    FittedBox(
+                                        fit: BoxFit.fill,
+                                        child: Lottie.asset(
+                                          'assets/otobus.json',
+                                          width: 100,
+                                          height: 100,
+                                        )),
                                     Text(
                                       "Durağa İlerliyorsunuz..",
                                       style: Constant.busStopTitleStyle,
@@ -334,7 +336,7 @@ class _HomepageRightState extends State<HomepageRight> {
                                   builder: (context, state) {
                                     return Text(
                                       state.alarmSize == 78
-                                          ? "TERS"
+                                          ? "TERS YON"
                                           : state.alarmSize.toString(),
                                       style: Constant.ledTextStyle,
                                     );
@@ -348,7 +350,7 @@ class _HomepageRightState extends State<HomepageRight> {
                 ),
                 const Divider(
                   color: Colors.white,
-                  thickness: 1.0,
+                  thickness: 1,
                 ),
               ],
             );

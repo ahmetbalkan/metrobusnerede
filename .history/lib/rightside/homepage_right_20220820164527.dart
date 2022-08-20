@@ -124,11 +124,12 @@ class _HomepageRightState extends State<HomepageRight> {
                           currentEvent.nextStop == "ilerliyor"
                               ? Column(
                                   children: [
-                                    Lottie.asset(
-                                      'assets/otobus.json',
-                                      width: 300,
-                                      height: 100,
-                                    ),
+
+                                        child: Lottie.asset(
+                                          'assets/otobus.json',
+                                          width: 300,
+                                          height: 100,
+                                        ),
                                     Text(
                                       "Durağa İlerliyorsunuz..",
                                       style: Constant.busStopTitleStyle,

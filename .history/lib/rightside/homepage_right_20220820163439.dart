@@ -121,14 +121,32 @@ class _HomepageRightState extends State<HomepageRight> {
                     builder: (context, currentEvent) {
                       return Column(
                         children: [
+                          Stack(
+                            children: <Widget>[
+                              FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Lottie.asset(
+                                    alignment: Alignment.center,
+                                    'assets/otobus.json',
+                                    width: 100,
+                                    height: 100,
+                                  )),
+                              Text(
+                                "Durağa İlerliyorsunuz..",
+                                style: Constant.busStopTitleStyle,
+                              ),
+                            ],
+                          ),
                           currentEvent.nextStop == "ilerliyor"
                               ? Column(
                                   children: [
-                                    Lottie.asset(
-                                      'assets/otobus.json',
-                                      width: 300,
-                                      height: 100,
-                                    ),
+                                    FittedBox(
+                                        fit: BoxFit.fill,
+                                        child: Lottie.asset(
+                                          'assets/otobus.json',
+                                          width: 100,
+                                          height: 100,
+                                        )),
                                     Text(
                                       "Durağa İlerliyorsunuz..",
                                       style: Constant.busStopTitleStyle,
