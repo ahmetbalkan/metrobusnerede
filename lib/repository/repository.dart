@@ -3,7 +3,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -61,12 +61,12 @@ class LocationRepository {
     busStopList.add(busStop(36, "ZINCIRLIKUYU", 41.066149, 29.013119, 156));
     busStopList
         .add(busStop(37, "15 TEM. SEH. KOP.", 41.036593, 29.043351, 200));
-    busStopList.add(busStop(39, "BURHANIYE", 41.032020, 29.046939, 105));
+    busStopList.add(busStop(38, "BURHANIYE", 41.032020, 29.046939, 105));
     busStopList.add(busStop(39, "ALTUNIZADE", 41.021904, 29.048345, 300));
     busStopList.add(busStop(40, "ACIBADEM", 41.014534, 29.057279, 230));
     busStopList.add(busStop(41, "UZUNCAYIR", 40.998859, 29.056540, 162));
     busStopList.add(busStop(42, "FIKIRTEPE", 40.993912, 29.048362, 300));
-    busStopList.add(busStop(43, "S.CESME SONDURAK", 40.991768, 29.037694, 130));
+    busStopList.add(busStop(43, "S.CESME SONDURAK", 40.9923, 29.0359, 130));
     return busStopList;
   }
 
@@ -78,166 +78,169 @@ class LocationRepository {
       context: context,
       builder: (context) {
         return Expanded(
-          child: Dialog(
-              shape: const RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              backgroundColor: backgroundColor,
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    textAlign: TextAlign.center,
-                    "Lütfen gitmek istediğiniz yönü seçiniz.",
-                    style: Constant.busStopTitleStyle,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          context.read<WayCounterBlocCubit>().beylikduzu();
-                          box.put("firsttime", true);
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          width: 140,
-                          height: 150,
-                          child: Column(children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.red.shade300,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(30))),
-                              child: const Icon(
-                                Icons.chevron_left_rounded,
+          child: Container(
+            child: Dialog(
+                shape: const RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                backgroundColor: backgroundColor,
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Lütfen gitmek istediğiniz yönü seçiniz.",
+                      style: Constant.busStopTitleStyle,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Divider(
+                      color: Colors.white,
+                      thickness: 1,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            context.read<WayCounterBlocCubit>().beylikduzu();
+                            box.put("firsttime", true);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
-                                size: 50,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            width: 130,
+                            height: 150,
+                            child: Column(children: [
+                              const SizedBox(
+                                height: 10,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              textAlign: TextAlign.center,
-                              "Beylikdüzü Avcılar",
-                              style: Constant.wayDialogBlackStyle,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text("Yönüne Git",
-                                style: Constant.wayDialogRedStyle),
-                          ]),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          context.read<WayCounterBlocCubit>().sogutluCesme();
-                          box.put("firsttime", true);
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          width: 140,
-                          height: 150,
-                          child: Column(children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.red.shade300,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(30))),
-                                  child: const Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: Colors.white,
-                                    size: 50,
-                                  ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red.shade300,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(30))),
+                                child: const Icon(
+                                  Icons.chevron_left_rounded,
+                                  color: Colors.white,
+                                  size: 50,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              textAlign: TextAlign.center,
-                              "Zincirlikuyu Söğütlüçeşme",
-                              style: Constant.wayDialogBlackStyle,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text("Yönüne Git",
-                                style: Constant.wayDialogRedStyle),
-                          ]),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                textAlign: TextAlign.center,
+                                "Beylikdüzü Avcılar",
+                                style: Constant.wayDialogBlackStyle,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Yönüne Git",
+                                  style: Constant.wayDialogRedStyle),
+                            ]),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    textAlign: TextAlign.center,
-                    "Seçim yapmadan bu bölümü geçemessiniz.",
-                    style: Constant.busStopTitleStyle,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ]),
-              )),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            context.read<WayCounterBlocCubit>().sogutluCesme();
+                            box.put("firsttime", true);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            width: 130,
+                            height: 150,
+                            child: Column(children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.red.shade300,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(30))),
+                                    child: const Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: Colors.white,
+                                      size: 50,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                textAlign: TextAlign.center,
+                                "Zincirlikuyu Söğütlüçeşme",
+                                style: Constant.wayDialogBlackStyle,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Yönüne Git",
+                                  style: Constant.wayDialogRedStyle),
+                            ]),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Divider(
+                      color: Colors.white,
+                      thickness: 1,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Seçim yapmadan bu bölümü geçemessiniz.",
+                      style: Constant.busStopTitleStyle,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ]),
+                )),
+          ),
         );
       },
     );
@@ -324,7 +327,88 @@ class LocationRepository {
     );
   }
 
-  void permSettingDialog(BuildContext context) {
+  void LocationAlwaysDialog(BuildContext context) {
+    showDialog(
+      barrierColor: Colors.black54,
+      context: context,
+      builder: (context) {
+        return Expanded(
+          child: Dialog(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              backgroundColor: backgroundColor,
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Konum izniniz her zaman olarak ayarlanmadığı sürece uygulama sağlıklı çalışmayacaktır.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Image.asset("assets/ios1.png"),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset("assets/ios2.png"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            AppSettings.openNotificationSettings();
+                          },
+                          child: Text("Ayarları Aç")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Kapat")),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ]),
+              )),
+        );
+      },
+    );
+  }
+
+  void permSettingAndroidDialog(BuildContext context) {
     showDialog(
       barrierColor: Colors.black54,
       context: context,
@@ -366,6 +450,87 @@ class LocationRepository {
                     height: 5,
                   ),
                   Image.asset("assets/noti.png"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            AppSettings.openNotificationSettings();
+                          },
+                          child: Text("Ayarları Aç")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Kapat")),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ]),
+              )),
+        );
+      },
+    );
+  }
+
+  void permSettingIOSDialog(BuildContext context) {
+    showDialog(
+      barrierColor: Colors.black54,
+      context: context,
+      builder: (context) {
+        return Expanded(
+          child: Dialog(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              backgroundColor: backgroundColor,
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Bildirim izinleri olmadan alarm sistemi düzgün çalışmaz ve uygulama inmek istediğiniz durakta sizi uyaramaz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Image.asset("assets/noti1.png"),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset("assets/noti2.png"),
                   const SizedBox(
                     height: 5,
                   ),
@@ -486,11 +651,4 @@ class LocationRepository {
       return false;
     }
   }
-
-  BannerAd myBanner = BannerAd(
-    adUnitId: '<ad unit ID>',
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
 }

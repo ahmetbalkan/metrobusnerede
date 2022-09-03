@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
+import 'package:metrobusnerede/notification.dart';
 import 'package:metrobusnerede/repository/repository.dart';
 import 'constant/constant.dart';
 import 'cubit/alarm_name_cubit/alarm_name_cubit.dart';
@@ -16,6 +17,7 @@ class AlarmList extends StatelessWidget {
   Widget build(BuildContext context) {
     var box2 = Hive.box('notif');
     final locationRepository = locator.get<LocationRepository>();
+    final localnotification = locator.get<LocalNotificationService>();
     return Scaffold(
       appBar: locationRepository.appbarAlarmWidget(locationRepository, context),
       body: SafeArea(
@@ -53,6 +55,7 @@ class AlarmList extends StatelessWidget {
                               context.read<AlarmNameCubit>().setAlarm(index);
                               Navigator.pop(context);
                               box2.put("notif", true);
+                              localnotification.stopNoti(2);
                             },
                             leading: Padding(
                               padding: const EdgeInsets.all(4.0),

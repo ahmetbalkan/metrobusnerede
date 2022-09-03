@@ -23,6 +23,8 @@ class NextStopBloc extends Bloc<NextStopEvent, NextStopState> {
       var box = Hive.box('firsttime');
       bool? a = await box.get("firsttime");
       int way = event.way;
+      busStoplist.clear();
+      distanceList.clear();
       busStoplist = await locationRepository.busStopList();
 
       for (var i = 0; i < busStoplist.length; i++) {
@@ -41,37 +43,54 @@ class NextStopBloc extends Bloc<NextStopEvent, NextStopState> {
         if (distanceList[i] == minDistance) {
           if (a == true) {
             if (way == 0) {
-              emit(MyNextStopState(
-                  nextStopValue: busStoplist[i + 1].name,
-                  nextstopid: busStoplist[i + 1].busstopid));
+              if (busStoplist[i].busstopid == 43) {
+                emit(MyNextStopState(
+                    nextStopValue: await busStoplist[43].name,
+                    nextstopid: busStoplist[43].busstopid));
+              } else {}
             }
             if (way == 1) {
-              emit(MyNextStopState(
-                  nextStopValue: busStoplist[i - 1].name,
-                  nextstopid: busStoplist[i - 1].busstopid));
+              if (busStoplist[i].busstopid == 0) {
+                emit(MyNextStopState(
+                    nextStopValue: await busStoplist[0].name,
+                    nextstopid: busStoplist[0].busstopid));
+              } else {
+                emit(MyNextStopState(
+                    nextStopValue: busStoplist[i - 1].name,
+                    nextstopid: busStoplist[i - 1].busstopid));
+              }
             }
             await box.put("firsttime", false);
           }
 
           if (way == 0) {
             if (minDistance < busStoplist[i].check / 2) {
-              emit(MyNextStopState(
-                  nextStopValue: await busStoplist[i + 1].name,
-                  nextstopid: busStoplist[i + 1].busstopid));
+              if (busStoplist[i].busstopid == 43) {
+                emit(MyNextStopState(
+                    nextStopValue: await busStoplist[43].name,
+                    nextstopid: busStoplist[43].busstopid));
+              } else {
+                emit(MyNextStopState(
+                    nextStopValue: await busStoplist[i + 1].name,
+                    nextstopid: busStoplist[i].busstopid));
+              }
             }
           }
           if (way == 1) {
             if (minDistance < busStoplist[i].check / 2) {
-              emit(MyNextStopState(
-                  nextStopValue: await busStoplist[i - 1].name,
-                  nextstopid: busStoplist[i - 1].busstopid));
+              if (busStoplist[i].busstopid == 0) {
+                emit(MyNextStopState(
+                    nextStopValue: await busStoplist[0].name,
+                    nextstopid: busStoplist[0].busstopid));
+              } else {
+                emit(MyNextStopState(
+                    nextStopValue: busStoplist[i - 1].name,
+                    nextstopid: busStoplist[i - 1].busstopid));
+              }
             }
           }
         }
       }
-
-      busStoplist.clear();
-      distanceList.clear();
     });
   }
 

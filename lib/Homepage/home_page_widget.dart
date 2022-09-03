@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -32,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     service = LocalNotificationService();
-
+    MobileAds.instance.initialize();
     service.intialize();
     super.initState();
     _createBannerAd();
@@ -64,54 +62,59 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final locationRepository = locator.get<LocationRepository>();
-
     Future.delayed(
         Duration.zero, () => locationRepository.showWayDialog(context));
 
     //Future.delayed(Duration(seconds: 1), () => _showInterstetialAd());
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Row(children: [
-                Expanded(
-                    flex: 3,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
-                            width: Constant.borderSize,
+    return Container(
+      color: backgroundColor,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: backgroundColor,
+          body: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Row(children: [
+                  Expanded(
+                      flex: 3,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                              width: Constant.borderSize,
+                            ),
                           ),
-                        ),
-                        child: const HomepageLeft())),
-                Expanded(
-                    flex: 6,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                width: Constant.borderSize, color: borderColor),
-                            right: BorderSide(
-                                width: Constant.borderSize, color: borderColor),
-                            top: BorderSide(
-                                width: Constant.borderSize, color: borderColor),
+                          child: const HomepageLeft())),
+                  Expanded(
+                      flex: 6,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  width: Constant.borderSize,
+                                  color: borderColor),
+                              right: BorderSide(
+                                  width: Constant.borderSize,
+                                  color: borderColor),
+                              top: BorderSide(
+                                  width: Constant.borderSize,
+                                  color: borderColor),
+                            ),
                           ),
-                        ),
-                        child: const HomepageRight())),
-              ]),
-            ),
-          ],
+                          child: const HomepageRight())),
+                ]),
+              ),
+            ],
+          ),
+          bottomNavigationBar: _bannerAd == null
+              ? Container()
+              : Container(
+                  margin: EdgeInsets.only(bottom: 12),
+                  height: 52,
+                  child: AdWidget(ad: _bannerAd!)),
         ),
-        bottomNavigationBar: _bannerAd == null
-            ? Container()
-            : Container(
-                margin: EdgeInsets.only(bottom: 12),
-                height: 52,
-                child: AdWidget(ad: _bannerAd!)),
       ),
     );
   }

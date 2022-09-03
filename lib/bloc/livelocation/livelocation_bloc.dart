@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,23 +27,19 @@ class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
   }
 
   void settings() async {
-    bool a = await location.serviceEnabled();
-
-    if (a == false) {
-      location.requestService();
-    }
     location.enableBackgroundMode();
-    location.changeNotificationOptions(
-      channelName: "MetrobusNeredeLocation",
-      title: "Metrobüs Nerede?",
-      iconName: '@drawable/metrobuslogo',
-      color: const Color(0xFFe94546),
-      subtitle: "Uygulaması Konumunuza Erişiyor",
-      description:
-          "Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.",
-    );
+    if (Platform.isAndroid)
+      location.changeNotificationOptions(
+        channelName: "MetrobusNeredeLocation",
+        title: "Metrobüs Nerede?",
+        iconName: '@drawable/metrobuslogo',
+        color: const Color(0xFFe94546),
+        subtitle: "Uygulaması Konumunuza Erişiyor",
+        description:
+            "Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.",
+      );
 
     location.changeSettings(
-        accuracy: LocationAccuracy.high, distanceFilter: 10, interval: 1000);
+        accuracy: LocationAccuracy.high, distanceFilter: 5, interval: 100);
   }
 }

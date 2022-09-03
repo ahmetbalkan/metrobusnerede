@@ -17,10 +17,18 @@ class LeftListBloc extends Bloc<LeftListEvent, LeftListState> {
       for (var i = 0; i < busStoplist.length; i++) {
         if (busStoplist[i].name == event.nextStopName) {
           if (event.way == 0) {
-            emit(MyLeftListState(nextStopValue: i - 1));
+            if (i == 43) {
+              emit(MyLeftListState(nextStopValue: 43));
+            } else {
+              emit(MyLeftListState(nextStopValue: i - 1));
+            }
           }
           if (event.way == 1) {
-            emit(MyLeftListState(nextStopValue: i + 1));
+            if (i == 0) {
+              emit(MyLeftListState(nextStopValue: 0));
+            } else {
+              emit(MyLeftListState(nextStopValue: i + 1));
+            }
           }
         }
       }

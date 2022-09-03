@@ -56,15 +56,17 @@ class busstop_list extends StatelessWidget {
                           color: index ==
                                   context.watch<LeftListBloc>().state.nextStop
                               ? Colors.green
-                              : index ==
-                                      wayMethod(
-                                          way,
-                                          context
-                                              .watch<LeftListBloc>()
-                                              .state
-                                              .nextStop)
-                                  ? Colors.orange.shade600
-                                  : null,
+                              : index == 43
+                                  ? null
+                                  : index ==
+                                          wayMethod(
+                                              way,
+                                              context
+                                                  .watch<LeftListBloc>()
+                                                  .state
+                                                  .nextStop)
+                                      ? Colors.orange.shade600
+                                      : null,
                           border: Border(
                             bottom: BorderSide(
                                 width: Constant.borderSize, color: borderColor),
@@ -86,9 +88,19 @@ class busstop_list extends StatelessWidget {
 
   int? wayMethod(int way, int currentstate) {
     if (way == 1) {
-      return currentstate = currentstate - 1;
+      int a = currentstate = currentstate - 1;
+      if (a == -1) {
+        return 0;
+      } else {
+        return a;
+      }
     } else if (way == 0) {
-      return currentstate = currentstate + 1;
+      int a = currentstate = currentstate + 1;
+      if (a == 44) {
+        return 43;
+      } else {
+        return a;
+      }
     }
   }
 }

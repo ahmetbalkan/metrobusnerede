@@ -1,10 +1,8 @@
 # This is a generated file; do not edit or check into version control.
 app_settings=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\app_settings-4.1.8\\
-awesome_notifications=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\awesome_notifications-0.6.21\\
 flutter_local_notifications=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_local_notifications-9.7.1\\
 google_mobile_ads=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\google_mobile_ads-2.0.1\\
 location=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\location-4.4.0\\
-location_distance_calculator=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\location_distance_calculator-0.0.2\\
 location_web=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\location_web-3.1.1\\
 notification_permissions=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\notification_permissions-0.6.1\\
 path_provider=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-2.0.11\\

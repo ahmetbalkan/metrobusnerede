@@ -2,9 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:location/location.dart';
+import 'package:uuid/uuid.dart';
 import 'dart:math';
+import '../../locator.dart';
 import '../../models/bus_stop.dart';
+import '../../notification.dart';
 import '../../repository/repository.dart';
 part 'distance_alarm_stop_event.dart';
 part 'distance_alarm_stop_state.dart';
@@ -14,8 +18,12 @@ class DistanceAlarmStopBloc
   DistanceAlarmStopBloc()
       : super(const DistanceAlarmStopInitial(
             firstValue: 0, firstbusStopCount: 0)) {
-    final locationRepository = LocationRepository();
+    final locationRepository = locator.get<LocationRepository>();
+    final notification = locator.get<LocalNotificationService>();
+
+    var box2 = Hive.box('notif');
     List<busStop> busStoplist = [];
+    int id = 2;
 
     on<UpdateDistanceAlarmStopEvent>((event, emit) async {
       busStoplist = await locationRepository.busStopList();
@@ -26,6 +34,16 @@ class DistanceAlarmStopBloc
               event.position.longitude,
               busStoplist[i].latitude,
               busStoplist[i].longitude);
+          bool notifbool = box2.get("notif");
+          if (notifbool == true) {
+            if (alarmdistance < busStoplist[i].check) {
+              notification.showNotification(
+                  id: 2,
+                  title: busStoplist[i].name + " Durağına Vardınız. ",
+                  body: "Lütfen kapıya doğru ilerleyiniz.");
+            }
+            box2.put("notif", false);
+          }
 
           emit(MyDistanceAlarmStopState(
               distanceValue: alarmdistance.toInt(),
