@@ -126,13 +126,15 @@ class _PermissionPageState extends State<PermissionPage> {
                                         }
                                       }
 
-                                      if (location ==
-                                          PermissionStatus.denied) {}
+                                      if (location == PermissionStatus.denied) {
+                                        locationRepository
+                                            .locationPermaDeniedDialog(context);
+                                      }
 
                                       if (location ==
                                           PermissionStatus.permanentlyDenied) {
                                         locationRepository
-                                            .permSettingAndroidDialog(context);
+                                            .locationPermaDeniedDialog(context);
                                       }
                                     },
                                     child: Text("İzin ver / Anasayfaya git")),

@@ -408,6 +408,83 @@ class LocationRepository {
     );
   }
 
+  void locationPermaDeniedDialog(BuildContext context) {
+    showDialog(
+      barrierColor: Colors.black54,
+      context: context,
+      builder: (context) {
+        return Expanded(
+          child: Dialog(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              backgroundColor: backgroundColor,
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Bildirim izinleri olmadan alarm sistemi düzgün çalışmaz ve uygulama inmek istediğiniz durakta sizi uyaramaz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
+                    style: Constant.busStopTitleStyle,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Image.asset("assets/permission.png"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            AppSettings.openAppSettings();
+                          },
+                          child: Text("Ayarları Aç")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Kapat")),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ]),
+              )),
+        );
+      },
+    );
+  }
+
   void permSettingAndroidDialog(BuildContext context) {
     showDialog(
       barrierColor: Colors.black54,

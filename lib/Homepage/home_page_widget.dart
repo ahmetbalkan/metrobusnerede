@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     Future.delayed(
         Duration.zero, () => locationRepository.showWayDialog(context));
 
-    //Future.delayed(Duration(seconds: 1), () => _showInterstetialAd());
+    Future.delayed(Duration(seconds: 1), () => _showInterstetialAd());
 
     return Container(
       color: backgroundColor,

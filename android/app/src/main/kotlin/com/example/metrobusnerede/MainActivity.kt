@@ -1,4 +1,4 @@
-package com.example.metrobusnerede
+package com.balkansoft.metrobusnerede
 
 import io.flutter.embedding.android.FlutterActivity
 
