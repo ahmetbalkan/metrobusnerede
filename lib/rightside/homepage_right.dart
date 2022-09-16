@@ -1,6 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:metrobusnerede/alarm_list.dart';
@@ -8,6 +9,7 @@ import 'package:metrobusnerede/bloc/alarm_size_bloc/alarm_size_bloc.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import 'package:metrobusnerede/locator.dart';
+import '../bloc/alarm_bloc/alarm_bloc.dart';
 import '../bloc/current_stop/current_stop_bloc.dart';
 import '../bloc/distance_alarm_stop/distance_alarm_stop_bloc.dart';
 import '../bloc/distance_next_stop/distance_next_stop_bloc.dart';
@@ -32,12 +34,14 @@ class _HomepageRightState extends State<HomepageRight> {
   void initState() {
     service = LocalNotificationService();
     service.intialize();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final locationRepository = locator.get<LocationRepository>();
+    final notification = locator.get<LocalNotificationService>();
     return BlocBuilder<LivelocationBloc, LivelocationState>(
       builder: (context, currentlocation) {
         if (currentlocation is LivelocationLoading) {
@@ -58,6 +62,8 @@ class _HomepageRightState extends State<HomepageRight> {
           context.watch<LeftListBloc>().add(UpdateLeftListEvent(
               nextStopName: context.watch<NextStopBloc>().state.nextStop,
               way: context.watch<WayCounterBlocCubit>().state.way));
+          context.watch<AlarmBloc>().add(LoadAlarmEvent(
+              alarm: context.watch<AlarmNameCubit>().state.alarmname));
           context.watch<DistanceAlarmStopBloc>().add(
               UpdateDistanceAlarmStopEvent(
                   alarmStopName:
@@ -96,14 +102,14 @@ class _HomepageRightState extends State<HomepageRight> {
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.change_circle,
                             size: 35,
                             color: Colors.white,
                           ),
                           Text(
-                            "Yönü Değiştir",
+                            "changeway".tr,
                             style: TextStyle(fontSize: 10, color: Colors.white),
                           )
                         ],
@@ -130,7 +136,7 @@ class _HomepageRightState extends State<HomepageRight> {
                                       height: 100,
                                     ),
                                     Text(
-                                      "Durağa İlerliyorsunuz..",
+                                      "ontheway".tr,
                                       style: Constant.busStopTitleStyle,
                                     ),
                                   ],
@@ -141,7 +147,7 @@ class _HomepageRightState extends State<HomepageRight> {
                                       padding: const EdgeInsets.only(
                                           top: 5, bottom: 10),
                                       child: Text(
-                                        "şu an.",
+                                        "now".tr,
                                         style: Constant.busStopTitleStyle,
                                       ),
                                     ),
@@ -153,7 +159,7 @@ class _HomepageRightState extends State<HomepageRight> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Text(
-                                        "Durağındasınız.",
+                                        "duragindasiniz".tr,
                                         style: Constant.busStopTitleStyle,
                                       ),
                                     ),
@@ -171,7 +177,7 @@ class _HomepageRightState extends State<HomepageRight> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    "Sonraki Durak",
+                    "nextstation".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                 ),
@@ -199,7 +205,7 @@ class _HomepageRightState extends State<HomepageRight> {
                         Padding(
                           padding: const EdgeInsets.only(top: 5, bottom: 5),
                           child: Text(
-                            "Kalan Mesafe",
+                            "distancenextstop".tr,
                             style: Constant.busStopTitleStyle,
                           ),
                         ),
@@ -227,7 +233,7 @@ class _HomepageRightState extends State<HomepageRight> {
                         Padding(
                           padding: const EdgeInsets.only(top: 5, bottom: 5),
                           child: Text(
-                            "Hız",
+                            "speed".tr,
                             style: Constant.busStopTitleStyle,
                           ),
                         ),
@@ -249,7 +255,7 @@ class _HomepageRightState extends State<HomepageRight> {
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 5),
                   child: Text(
-                    "Seçtiğiniz Durak",
+                    "yourchosenstop".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                 ),
@@ -275,8 +281,8 @@ class _HomepageRightState extends State<HomepageRight> {
                         MaterialPageRoute(
                             builder: (context) => const AlarmList()));
                   },
-                  child: const Text(
-                    'Durak Seç',
+                  child: Text(
+                    'selectbusstop'.tr,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
@@ -285,7 +291,7 @@ class _HomepageRightState extends State<HomepageRight> {
                   thickness: 1,
                 ),
                 Text(
-                  "Alarm Seçenekleri",
+                  "alarmoptions".tr,
                   style: Constant.busStopTitleStyle,
                 ),
                 Column(
@@ -300,7 +306,7 @@ class _HomepageRightState extends State<HomepageRight> {
                         Column(
                           children: [
                             Text(
-                              "Kalan Mesafe",
+                              "distancenextstop".tr,
                               style: Constant.busStopTitleStyle,
                             ),
                             Padding(
@@ -324,7 +330,7 @@ class _HomepageRightState extends State<HomepageRight> {
                         Column(
                           children: [
                             Text(
-                              "Kalan Durak Sayısı",
+                              "remainingstop".tr,
                               style: Constant.busStopTitleStyle,
                             ),
                             Padding(
@@ -334,7 +340,7 @@ class _HomepageRightState extends State<HomepageRight> {
                                   builder: (context, state) {
                                     return Text(
                                       state.alarmSize == 78
-                                          ? "TERS"
+                                          ? "wrongway".tr
                                           : state.alarmSize.toString(),
                                       style: Constant.ledTextStyle,
                                     );
@@ -353,12 +359,12 @@ class _HomepageRightState extends State<HomepageRight> {
               ],
             );
           } catch (e) {
-            return const Text("Yüklenemiyor.");
+            return Text("cannotload".tr);
           }
         } else if (currentlocation is LivelocationError) {
-          return const Text("Uygulama Düzgün Açılamadı.");
+          return Text("couldnotopen".tr);
         } else {
-          return const Text("Yüklenemiyor.");
+          return Text("cannotload".tr);
         }
       },
     );

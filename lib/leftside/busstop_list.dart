@@ -1,6 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:metrobusnerede/bloc/left_list/left_list_bloc.dart';
 import 'package:metrobusnerede/constant/constant.dart';
 import '../constant/color.dart';
@@ -37,7 +38,7 @@ class busstop_list extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(3.0),
                 child: Text(
-                  "Duraklar",
+                  "busstops".tr,
                   style: Constant.busStopFontStyle,
                 ),
               ),

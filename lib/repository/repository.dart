@@ -3,6 +3,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get_utils/get_utils.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
@@ -93,7 +94,7 @@ class LocationRepository {
                     ),
                     Text(
                       textAlign: TextAlign.center,
-                      "Lütfen gitmek istediğiniz yönü seçiniz.",
+                      "waydialogtitle".tr,
                       style: Constant.busStopTitleStyle,
                     ),
                     const SizedBox(
@@ -149,7 +150,7 @@ class LocationRepository {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text("Yönüne Git",
+                              Text("goway".tr,
                                   style: Constant.wayDialogRedStyle),
                             ]),
                           ),
@@ -203,7 +204,7 @@ class LocationRepository {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text("Yönüne Git",
+                              Text("goway".tr,
                                   style: Constant.wayDialogRedStyle),
                             ]),
                           ),
@@ -232,7 +233,7 @@ class LocationRepository {
                     ),
                     Text(
                       textAlign: TextAlign.center,
-                      "Seçim yapmadan bu bölümü geçemessiniz.",
+                      "gowaychoise".tr,
                       style: Constant.busStopTitleStyle,
                     ),
                     const SizedBox(
@@ -241,87 +242,6 @@ class LocationRepository {
                   ]),
                 )),
           ),
-        );
-      },
-    );
-  }
-
-  void locationDisableDialog(BuildContext context) {
-    showDialog(
-      barrierColor: Colors.black54,
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Expanded(
-          child: Dialog(
-              shape: const RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              backgroundColor: backgroundColor,
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    textAlign: TextAlign.center,
-                    "Konum Ayarı Kapalı",
-                    style: Constant.busStopTitleStyle,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    textAlign: TextAlign.center,
-                    "Uygulama Bu şekilde Çalışamaz.",
-                    style: Constant.busStopTitleStyle,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Icon(
-                    Icons.error,
-                    size: 70,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            AppSettings.openLocationSettings();
-                          },
-                          child: Text("Konumu Aç")),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Kapat")),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ]),
-              )),
         );
       },
     );
@@ -347,7 +267,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Konum izniniz her zaman olarak ayarlanmadığı sürece uygulama sağlıklı çalışmayacaktır.",
+                    "locationalwayspermdesc".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -355,7 +275,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
+                    "locationalwayspermdesc2".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -390,12 +310,12 @@ class LocationRepository {
                           onPressed: () {
                             AppSettings.openNotificationSettings();
                           },
-                          child: Text("Ayarları Aç")),
+                          child: Text("opensettings".tr)),
                       ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("Kapat")),
+                          child: Text("close".tr)),
                     ],
                   ),
                   const SizedBox(
@@ -428,16 +348,16 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Bildirim izinleri olmadan alarm sistemi düzgün çalışmaz ve uygulama inmek istediğiniz durakta sizi uyaramaz.",
-                    style: Constant.busStopTitleStyle,
+                    "locationpermdenieddesc".tr,
+                    style: Constant.permPageSmallfont,
                   ),
                   const SizedBox(
                     height: 5,
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
-                    style: Constant.busStopTitleStyle,
+                    "locationalwayspermdesc2".tr,
+                    style: Constant.permPageSmallfont,
                   ),
                   const SizedBox(
                     height: 5,
@@ -467,12 +387,12 @@ class LocationRepository {
                           onPressed: () {
                             AppSettings.openAppSettings();
                           },
-                          child: Text("Ayarları Aç")),
+                          child: Text("opensettings".tr)),
                       ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("Kapat")),
+                          child: Text("close".tr)),
                     ],
                   ),
                   const SizedBox(
@@ -505,7 +425,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Bildirim izinleri olmadan alarm sistemi düzgün çalışmaz ve uygulama inmek istediğiniz durakta sizi uyaramaz.",
+                    "locationpermdenieddesc".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -513,7 +433,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
+                    "locationalwayspermdesc2".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -544,12 +464,90 @@ class LocationRepository {
                           onPressed: () {
                             AppSettings.openNotificationSettings();
                           },
-                          child: Text("Ayarları Aç")),
+                          child: Text("opensettings".tr)),
                       ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("Kapat")),
+                          child: Text("close".tr)),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ]),
+              )),
+        );
+      },
+    );
+  }
+
+  void permlocAlwaysDialog(BuildContext context) {
+    showDialog(
+      barrierColor: Colors.black54,
+      context: context,
+      builder: (context) {
+        return Expanded(
+          child: Dialog(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              backgroundColor: backgroundColor,
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "locationpermdenieddesc".tr,
+                    style: Constant.permPageSmallfont,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "locationalwayspermdesc2".tr,
+                    style: Constant.permPageSmallfont,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Image.asset("assets/permission.png"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () async {
+                            PermissionStatus noti =
+                                await Permission.locationAlways.request();
+                          },
+                          child: Text("opensettings".tr)),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("close".tr)),
                     ],
                   ),
                   const SizedBox(
@@ -582,7 +580,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Bildirim izinleri olmadan alarm sistemi düzgün çalışmaz ve uygulama inmek istediğiniz durakta sizi uyaramaz.",
+                    "locationpermdenieddesc".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -590,7 +588,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.",
+                    "locationalwayspermdesc2".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -625,12 +623,12 @@ class LocationRepository {
                           onPressed: () {
                             AppSettings.openNotificationSettings();
                           },
-                          child: Text("Ayarları Aç")),
+                          child: Text("opensettings".tr)),
                       ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("Kapat")),
+                          child: Text("close".tr)),
                     ],
                   ),
                   const SizedBox(
@@ -654,14 +652,14 @@ class LocationRepository {
               showWayDialog(context);
             },
             child: Column(
-              children: const [
+              children: [
                 Icon(
                   Icons.change_circle,
                   size: 35,
                   color: Colors.white,
                 ),
                 Text(
-                  "Yönü Değiştir",
+                  "changeway".tr,
                   style: TextStyle(fontSize: 10, color: Colors.white),
                 )
               ],
@@ -686,6 +684,7 @@ class LocationRepository {
   AppBar appbarAlarmWidget(
       LocationRepository locationRepository, BuildContext context) {
     return AppBar(
+      iconTheme: IconThemeData(color: Colors.white),
       title: Column(
         children: [
           Center(

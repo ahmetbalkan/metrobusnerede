@@ -14,6 +14,15 @@ class Constant {
       fontSize: ScreenUtil().setSp(16),
       color: Colors.white,
       fontFamily: 'Armata');
+
+  static final permPageSmallfont = TextStyle(
+      fontSize: ScreenUtil().setSp(13),
+      color: Colors.white,
+      fontFamily: 'Armata');
+  static final permPageBigfont = TextStyle(
+      fontSize: ScreenUtil().setSp(16),
+      color: Colors.white,
+      fontFamily: 'Armata');
   static final busStopTitleRedStyle = TextStyle(
       fontSize: ScreenUtil().setSp(20),
       color: backgroundColor,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/constant/color.dart';
 import 'package:metrobusnerede/notification.dart';
@@ -32,7 +33,7 @@ class AlarmList extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      "Lütfen Durak Seçiniz.",
+                      "pleaseselectbusstop".tr,
                       style: Constant.busStopTitleStyle,
                     ),
                     const SizedBox(

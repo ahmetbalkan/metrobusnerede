@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrobusnerede/bloc/alarm_size_bloc/alarm_size_bloc.dart';
@@ -16,11 +17,13 @@ import 'package:metrobusnerede/cubit/way_counter_bloc/way_counter_bloc_cubit.dar
 import 'package:metrobusnerede/permission_page.dart';
 import 'package:metrobusnerede/repository/repository.dart';
 import 'Homepage/home_page_widget.dart';
+import 'bloc/alarm_bloc/alarm_bloc.dart';
 import 'bloc/current_stop/current_stop_bloc.dart';
 import 'constant/color.dart';
 import 'cubit/alarm_name_cubit/alarm_name_cubit.dart';
 import 'cubit/list_cubit.dart';
 import 'locator.dart';
+import 'translate_class.dart';
 
 final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -104,8 +107,13 @@ class MyApp extends StatelessWidget {
                   create: (BuildContext context) => DistanceAlarmStopBloc()),
               BlocProvider<AlarmSizeBloc>(
                   create: (BuildContext context) => AlarmSizeBloc()),
+              BlocProvider<AlarmBloc>(
+                  create: (BuildContext context) => AlarmBloc()),
             ],
-            child: MaterialApp(
+            child: GetMaterialApp(
+              translations: Messages(), // your translations
+              locale: Get.deviceLocale,
+              fallbackLocale: Locale('en', 'US'),
               debugShowCheckedModeBanner: false,
               title: 'Metrobüs Nerede?',
               theme: ThemeData(
