@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:metrobusnerede/Homepage/home_page_widget.dart';
+import 'package:metrobusnerede/constant/color.dart';
 import 'package:metrobusnerede/repository/repository.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'constant/constant.dart';
 import 'locator.dart';
@@ -20,6 +23,7 @@ class PermissionPage extends StatefulWidget {
 class _PermissionPageState extends State<PermissionPage> {
   PermissionStatus? locationperm, notificationperm;
   final locationRepository = locator.get<LocationRepository>();
+  Uri uri = Uri.parse('linkprivacy'.tr);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -190,9 +194,29 @@ class _PermissionPageState extends State<PermissionPage> {
                             SizedBox(
                               height: 10,
                             ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Center(
+                                    child: Text.rich(TextSpan(
+                                        text: 'permprivacytext'.tr,
+                                        style: Constant.permPageSmallfont,
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                          text: 'permprivacylinktext'.tr,
+                                          style: Constant.linkcolor,
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              launchUrl(uri);
+                                            })
+                                    ]))),
+                              ),
+                            ),
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 20.0),
+                                padding: const EdgeInsets.only(top: 5.0),
                                 child: ElevatedButton(
                                     onPressed: () async {
                                       PermissionStatus location =
@@ -200,11 +224,16 @@ class _PermissionPageState extends State<PermissionPage> {
 
                                       if (location ==
                                           PermissionStatus.granted) {
-                                        locationRepository
-                                            .permlocAlwaysDialog(context);
                                         PermissionStatus location =
                                             await Permission
                                                 .locationAlways.status;
+
+                                        if (location ==
+                                            PermissionStatus.denied) {
+                                          locationRepository
+                                              .permlocAlwaysDialog(context);
+                                        }
+
                                         if (location ==
                                             PermissionStatus.granted) {
                                           PermissionStatus noti =
@@ -245,9 +274,6 @@ class _PermissionPageState extends State<PermissionPage> {
                                             PermissionStatus noti =
                                                 await Permission.notification
                                                     .request();
-
-                                            print(
-                                                "NOTİ PERM " + noti.toString());
                                             if (noti ==
                                                 PermissionStatus.granted) {
                                               await Future.delayed(
@@ -304,7 +330,7 @@ class _PermissionPageState extends State<PermissionPage> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 10, left: 20, right: 20, top: 20),
-                            child: Text("İzin Sayfası",
+                            child: Text("permpage".tr,
                                 style: Constant.busStopTitleStyle,
                                 textAlign: TextAlign.center),
                           ),

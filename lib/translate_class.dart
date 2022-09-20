@@ -31,6 +31,8 @@ class Messages extends Translations {
           'opensettings': 'Open Settings',
           'close': 'Close',
           'locationpermdenieddesc':
+              'Your app wont be able to alert you in the background unless the location permission is marked as "Always"',
+          'notipermdenieddesc':
               'Without notification permissions, the alarm system will not work properly and the application will not be able to warn you at the stop you want to get off at.',
           'changeway': 'Change Way',
           'ontheway': 'on the way',
@@ -49,6 +51,12 @@ class Messages extends Translations {
           'busstops': 'Bus Stops',
           'pleaseselectbusstop': 'Please Select Stop.',
           'secilmedi': 'NOT SELECTED.',
+          'linkprivacy':
+              'https://metrobusnerede.ahmetbalkan.com.tr/en/privacy-policy/',
+          'permprivacytext':
+              'By continuing, you are deemed to have accepted the privacy policy. You can',
+          'permprivacylinktext': ' click here to read.',
+          'permpage': 'Perm Page',
         },
         'tr_TR': {
           'permission': 'İzinler',
@@ -76,8 +84,10 @@ class Messages extends Translations {
               'Aşağıdaki yönergelere göre izin işlemini gerçekleştirebilirsiniz.',
           'opensettings': 'Ayarları Aç',
           'close': 'Kapat',
-          'locationpermdenieddesc':
+          'notipermdenieddesc':
               'Bildirim izinleri olmadan alarm sistemi düzgün çalışmaz ve uygulama inmek istediğiniz durakta sizi uyaramaz.',
+          'locationpermdenieddesc':
+              'Lokasyon izni "Her zaman" olarak işaretlenmediği sürece uygulamanız arka planda size uyarı veremez.',
           'changeway': 'Yönü Değiştir',
           'ontheway': 'Durağa İlerliyorsunuz..',
           'now': 'şu an',
@@ -88,13 +98,19 @@ class Messages extends Translations {
           'yourchosenstop': 'Seçtiğiniz Durak',
           'selectbusstop': 'Durak Seç',
           'alarmoptions': 'Alarm Seçenekleri',
-          'remainingstop': 'Kalan Durak Sayısı',
+          'remainingstop': 'Kalan Durak',
           'wrongway': 'TERS YÖN',
           'cannotload': 'Yüklenemiyor',
           'couldnotopen': 'Uygulama Düzgün Açılamadı.',
           'busstops': 'Duraklar',
           'pleaseselectbusstop': 'Lütfen Durak Seçiniz.',
           'secilmedi': 'SECILMEDI.',
+          'linkprivacy':
+              'https://metrobusnerede.ahmetbalkan.com.tr/gizlilik-politikasi/',
+          'permprivacytext':
+              'Devam etmeniz durumun gizlilik politikası kabul etmiş sayılırsınız. okumak için ',
+          'permprivacylinktext': 'buraya tıklayabilirsiniz.',
+          'permpage': 'İzin Sayfası',
         }
       };
 }

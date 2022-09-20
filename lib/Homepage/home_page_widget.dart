@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     Future.delayed(
         Duration.zero, () => locationRepository.showWayDialog(context));
 
-    Future.delayed(Duration(seconds: 1), () => _showInterstetialAd());
+    //Future.delayed(Duration(seconds: 1), () => _showInterstetialAd());
 
     return Container(
       color: backgroundColor,
@@ -108,12 +108,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               ),
             ],
           ),
-          bottomNavigationBar: _bannerAd == null
+          /* bottomNavigationBar: _bannerAd == null
               ? Container()
               : Container(
                   margin: EdgeInsets.only(bottom: 12),
                   height: 52,
-                  child: AdWidget(ad: _bannerAd!)),
+                  child: AdWidget(ad: _bannerAd!)),*/
         ),
       ),
     );

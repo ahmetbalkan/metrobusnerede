@@ -308,6 +308,7 @@ class LocationRepository {
                     children: [
                       ElevatedButton(
                           onPressed: () {
+                            Navigator.pop(context);
                             AppSettings.openNotificationSettings();
                           },
                           child: Text("opensettings".tr)),
@@ -385,6 +386,7 @@ class LocationRepository {
                     children: [
                       ElevatedButton(
                           onPressed: () {
+                            Navigator.pop(context);
                             AppSettings.openAppSettings();
                           },
                           child: Text("opensettings".tr)),
@@ -425,7 +427,7 @@ class LocationRepository {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    "locationpermdenieddesc".tr,
+                    "notipermdenieddesc".tr,
                     style: Constant.busStopTitleStyle,
                   ),
                   const SizedBox(
@@ -462,6 +464,7 @@ class LocationRepository {
                     children: [
                       ElevatedButton(
                           onPressed: () {
+                            Navigator.pop(context);
                             AppSettings.openNotificationSettings();
                           },
                           child: Text("opensettings".tr)),
@@ -539,6 +542,7 @@ class LocationRepository {
                     children: [
                       ElevatedButton(
                           onPressed: () async {
+                            Navigator.pop(context);
                             PermissionStatus noti =
                                 await Permission.locationAlways.request();
                           },
@@ -621,6 +625,7 @@ class LocationRepository {
                     children: [
                       ElevatedButton(
                           onPressed: () {
+                            Navigator.pop(context);
                             AppSettings.openNotificationSettings();
                           },
                           child: Text("opensettings".tr)),

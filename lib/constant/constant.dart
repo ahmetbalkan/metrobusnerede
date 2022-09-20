@@ -15,12 +15,22 @@ class Constant {
       color: Colors.white,
       fontFamily: 'Armata');
 
+  static final linkcolor = TextStyle(
+      fontSize: ScreenUtil().setSp(12),
+      color: Colors.lightGreenAccent.shade700,
+      fontFamily: 'Armata');
+
+  static final linkcolorwhite = TextStyle(
+      fontSize: ScreenUtil().setSp(14),
+      color: Colors.white,
+      fontFamily: 'Armata');
+
   static final permPageSmallfont = TextStyle(
-      fontSize: ScreenUtil().setSp(13),
+      fontSize: ScreenUtil().setSp(12),
       color: Colors.white,
       fontFamily: 'Armata');
   static final permPageBigfont = TextStyle(
-      fontSize: ScreenUtil().setSp(16),
+      fontSize: ScreenUtil().setSp(14),
       color: Colors.white,
       fontFamily: 'Armata');
   static final busStopTitleRedStyle = TextStyle(
