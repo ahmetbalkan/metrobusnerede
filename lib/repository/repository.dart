@@ -722,11 +722,8 @@ class LocationRepository {
 
   Future<bool> permCheck() async {
     var a = await Permission.location.status;
-    var b = await Permission.locationAlways.status;
-    var c = await Permission.notification.status;
-    if (a == PermissionStatus.granted &&
-        b == PermissionStatus.granted &&
-        c == PermissionStatus.granted) {
+    var b = await Permission.notification.status;
+    if (a == PermissionStatus.granted && b == PermissionStatus.granted) {
       return true;
     } else {
       return false;

@@ -14,11 +14,3 @@ class LoadAlarmEvent extends AlarmEvent {
   @override
   List<Object> get props => [alarm];
 }
-
-class UpdateAlarmEvent extends AlarmEvent {
-  final int distancealarm;
-
-  const UpdateAlarmEvent({required this.distancealarm});
-  @override
-  List<Object> get props => [distancealarm];
-}

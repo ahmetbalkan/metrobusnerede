@@ -113,35 +113,6 @@ class _PermissionPageState extends State<PermissionPage> {
                               child: Row(children: [
                                 Expanded(
                                   flex: 1,
-                                  child: FaIcon(FontAwesomeIcons.locationArrow,
-                                      color: Colors.white),
-                                ),
-                                Expanded(
-                                  flex: 9,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("backgroundpermission".tr,
-                                          style: Constant.permPageBigfont,
-                                          textAlign: TextAlign.center),
-                                      Text("backgroundpermissiondesc".tr,
-                                          style: Constant.permPageSmallfont,
-                                          textAlign: TextAlign.left),
-                                    ],
-                                  ),
-                                )
-                              ]),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 10, right: 10),
-                              child: Row(children: [
-                                Expanded(
-                                  flex: 1,
                                   child: FaIcon(FontAwesomeIcons.bell,
                                       color: Colors.white),
                                 ),
@@ -224,16 +195,40 @@ class _PermissionPageState extends State<PermissionPage> {
 
                                       if (location ==
                                           PermissionStatus.granted) {
-                                        PermissionStatus location =
-                                            await Permission
-                                                .locationAlways.status;
+                                        PermissionStatus noti = await Permission
+                                            .notification
+                                            .request();
+                                        if (noti == PermissionStatus.granted) {
+                                          await Future.delayed(
+                                              const Duration(seconds: 1));
 
-                                        if (location ==
-                                            PermissionStatus.denied) {
-                                          locationRepository
-                                              .permlocAlwaysDialog(context);
+                                          if (!mounted) return;
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const MyHomePage()));
                                         }
+                                        if (noti == PermissionStatus.denied) {
+                                          await Future.delayed(
+                                              const Duration(seconds: 1));
 
+                                          if (!mounted) return;
+                                          locationRepository
+                                              .permSettingAndroidDialog(
+                                                  context);
+                                        }
+                                      }
+
+                                      if (location == PermissionStatus.denied) {
+                                        locationRepository
+                                            .locationPermaDeniedDialog(context);
+                                      }
+
+                                      if (location ==
+                                          PermissionStatus.permanentlyDenied) {
+                                        locationRepository
+                                            .permSettingAndroidDialog(context);
                                         if (location ==
                                             PermissionStatus.granted) {
                                           PermissionStatus noti =
@@ -261,54 +256,6 @@ class _PermissionPageState extends State<PermissionPage> {
                                                     context);
                                           }
                                         }
-                                        if (location ==
-                                            PermissionStatus.denied) {}
-                                        if (location ==
-                                            PermissionStatus
-                                                .permanentlyDenied) {
-                                          locationRepository
-                                              .permSettingAndroidDialog(
-                                                  context);
-                                          if (location ==
-                                              PermissionStatus.granted) {
-                                            PermissionStatus noti =
-                                                await Permission.notification
-                                                    .request();
-                                            if (noti ==
-                                                PermissionStatus.granted) {
-                                              await Future.delayed(
-                                                  const Duration(seconds: 1));
-
-                                              if (!mounted) return;
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const MyHomePage()));
-                                            }
-                                            if (noti ==
-                                                PermissionStatus.denied) {
-                                              await Future.delayed(
-                                                  const Duration(seconds: 1));
-
-                                              if (!mounted) return;
-                                              locationRepository
-                                                  .permSettingAndroidDialog(
-                                                      context);
-                                            }
-                                          }
-                                        }
-                                      }
-
-                                      if (location == PermissionStatus.denied) {
-                                        locationRepository
-                                            .locationPermaDeniedDialog(context);
-                                      }
-
-                                      if (location ==
-                                          PermissionStatus.permanentlyDenied) {
-                                        locationRepository
-                                            .locationPermaDeniedDialog(context);
                                       }
                                     },
                                     child: Text("permbuttontext".tr)),

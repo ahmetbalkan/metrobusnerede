@@ -11,7 +11,7 @@ abstract class LivelocationState extends Equatable {
 class LivelocationLoading extends LivelocationState {}
 
 class LivelocationLoaded extends LivelocationState {
-  final LocationData position;
+  final Position position;
   final double speed;
 
   const LivelocationLoaded({required this.position, required this.speed});

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'dart:math';
 import '../../models/bus_stop.dart';

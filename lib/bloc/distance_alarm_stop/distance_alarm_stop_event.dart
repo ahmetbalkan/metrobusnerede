@@ -9,7 +9,7 @@ abstract class DistanceAlarmStopEvent extends Equatable {
 
 class UpdateDistanceAlarmStopEvent extends DistanceAlarmStopEvent {
   final String alarmStopName;
-  final LocationData position;
+  final Position position;
   final BuildContext context;
 
   const UpdateDistanceAlarmStopEvent(

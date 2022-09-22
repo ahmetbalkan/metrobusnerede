@@ -10,7 +10,7 @@ abstract class LivelocationEvent extends Equatable {
 class LoadLocationEvent extends LivelocationEvent {}
 
 class UpdateLocationEvent extends LivelocationEvent {
-  final LocationData position;
+  final Position position;
   const UpdateLocationEvent({required this.position});
   @override
   List<Object> get props => [position];
@@ -19,7 +19,7 @@ class UpdateLocationEvent extends LivelocationEvent {
 class LoadSpeedEvent extends LivelocationEvent {}
 
 class UpdateSpeedEvent extends LivelocationEvent {
-  final LocationData position;
+  final Position position;
   const UpdateSpeedEvent({required this.position});
   @override
   List<Object> get props => [position];

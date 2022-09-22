@@ -8,7 +8,7 @@ abstract class NextStopEvent extends Equatable {
 }
 
 class UpdateNextStopEvent extends NextStopEvent {
-  final LocationData position;
+  final Position position;
   final int way;
   const UpdateNextStopEvent({required this.position, required this.way});
 

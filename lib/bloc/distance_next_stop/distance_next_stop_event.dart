@@ -9,7 +9,7 @@ abstract class DistanceNextStopEvent extends Equatable {
 
 class UpdateDistanceNextStopEvent extends DistanceNextStopEvent {
   final String nextStopName;
-  final LocationData position;
+  final Position position;
   final int way;
 
   const UpdateDistanceNextStopEvent(
