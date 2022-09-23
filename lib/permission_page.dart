@@ -192,7 +192,6 @@ class _PermissionPageState extends State<PermissionPage> {
                                     onPressed: () async {
                                       PermissionStatus location =
                                           await Permission.location.request();
-
                                       if (location ==
                                           PermissionStatus.granted) {
                                         PermissionStatus noti = await Permission
@@ -215,20 +214,21 @@ class _PermissionPageState extends State<PermissionPage> {
 
                                           if (!mounted) return;
                                           locationRepository
-                                              .permSettingAndroidDialog(
-                                                  context);
+                                              .notiDialogAndroid(context);
                                         }
                                       }
 
                                       if (location == PermissionStatus.denied) {
                                         locationRepository
-                                            .locationPermaDeniedDialog(context);
+                                            .locationAndroidDeniedDialog(
+                                                context);
                                       }
 
                                       if (location ==
                                           PermissionStatus.permanentlyDenied) {
                                         locationRepository
-                                            .permSettingAndroidDialog(context);
+                                            .locationAndroidDeniedDialog(
+                                                context);
                                         if (location ==
                                             PermissionStatus.granted) {
                                           PermissionStatus noti =
@@ -252,8 +252,7 @@ class _PermissionPageState extends State<PermissionPage> {
 
                                             if (!mounted) return;
                                             locationRepository
-                                                .permSettingAndroidDialog(
-                                                    context);
+                                                .notiDialogAndroid(context);
                                           }
                                         }
                                       }
@@ -348,12 +347,12 @@ class _PermissionPageState extends State<PermissionPage> {
       } else {
         /*location always else*/
         print('/*location alwaays else*/');
-        locationRepository.LocationAlwaysDialog(context);
+        locationRepository.LocationDeniedDialogIOS(context);
       }
     } else {
       /*location else*/
       print('/*location else*/');
-      locationRepository.LocationAlwaysDialog(context);
+      locationRepository.LocationDeniedDialogIOS(context);
     }
 
     print("location permission: ${statuses[Permission.location]}, "

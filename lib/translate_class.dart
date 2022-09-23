@@ -57,6 +57,8 @@ class Messages extends Translations {
               'By continuing, you are deemed to have accepted the privacy policy. You can',
           'permprivacylinktext': ' click here to read.',
           'permpage': 'Perm Page',
+          'permlocres': 'assets/permission-ing.jpg',
+          'permnotires': 'assets/noti-ing.png',
           'notificationtitle': 'Metrobüs Nerede ?',
           'notificationdesc':
               'Metrobus Nerede Application now provides access to your location.',
@@ -114,6 +116,8 @@ class Messages extends Translations {
               'Devam etmeniz durumun gizlilik politikası kabul etmiş sayılırsınız. okumak için ',
           'permprivacylinktext': 'buraya tıklayabilirsiniz.',
           'permpage': 'İzin Sayfası',
+          'permlocres': 'assets/permission-tr.jpg',
+          'permnotires': 'assets/noti-tr.png',
           'notificationtitle': 'Metrobüs Nerede ?',
           'notificationdesc':
               'Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.',

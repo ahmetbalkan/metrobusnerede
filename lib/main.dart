@@ -135,7 +135,7 @@ class MyApp extends StatelessWidget {
                   } else {
                     return Scaffold(
                         backgroundColor: backgroundColor,
-                        body: const CircularProgressIndicator());
+                        body: const Text("mahmut"));
                   }
                 },
               ),

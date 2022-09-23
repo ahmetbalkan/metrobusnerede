@@ -1,6 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:lottie/lottie.dart';
 

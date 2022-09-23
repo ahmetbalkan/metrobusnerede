@@ -14,15 +14,17 @@ part 'livelocation_state.dart';
 
 class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
   late LocationSettings locationSettings;
+  StreamSubscription? _streamSubscription;
+
   LivelocationBloc() : super(LivelocationLoading()) {
     settings();
     on<LoadLocationEvent>((event, emit) async {
+      _streamSubscription?.cancel();
       try {
-        StreamSubscription<Position> positionStream =
+        _streamSubscription =
             Geolocator.getPositionStream(locationSettings: locationSettings)
                 .listen((Position position) {
           add(UpdateLocationEvent(position: position));
-          print(position.latitude.toString() + " TEST");
         });
       } catch (e) {
         print(e);
@@ -39,10 +41,7 @@ class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
       locationSettings = AndroidSettings(
           accuracy: LocationAccuracy.high,
           distanceFilter: 10,
-          forceLocationManager: true,
           intervalDuration: const Duration(seconds: 1),
-          //(Optional) Set foreground notification config to keep the app alive
-          //when going to the background
           foregroundNotificationConfig: ForegroundNotificationConfig(
             notificationText:
                 "Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.",

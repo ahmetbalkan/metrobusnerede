@@ -33,8 +33,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     MobileAds.instance.initialize();
     service.intialize();
     super.initState();
-    _createBannerAd();
-    _createinterAd();
+    // _createBannerAd();
+    //_createinterAd();
   }
 
   @override
