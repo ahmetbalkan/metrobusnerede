@@ -4,6 +4,7 @@ import 'package:metrobusnerede/constant/color.dart';
 
 class Constant {
   Constant._();
+
   static const double borderSize = 1;
   static final busStopFontStyle = TextStyle(
     fontSize: ScreenUtil().setSp(12),

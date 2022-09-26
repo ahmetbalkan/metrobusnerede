@@ -51,36 +51,43 @@ class AlarmList extends StatelessWidget {
                         scrollDirection: Axis.vertical,
                         itemCount: state.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () {
-                              context.read<AlarmNameCubit>().setAlarm(index);
-                              Navigator.pop(context);
-                              box2.put("notif", true);
-                              localnotification.stopNoti(2);
-                            },
-                            leading: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFFe0f2f1)),
-                                child: Center(
-                                    child: Text(
-                                  state[index].busstopid.toString(),
-                                  style: Constant.busStopTitleRedStyle,
-                                )),
+                          return Column(
+                            children: [
+                              Text("test"),
+                              ListTile(
+                                onTap: () {
+                                  context
+                                      .read<AlarmNameCubit>()
+                                      .setAlarm(index);
+                                  Navigator.pop(context);
+                                  box2.put("notif", true);
+                                  localnotification.stopNoti(2);
+                                },
+                                leading: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0xFFe0f2f1)),
+                                    child: Center(
+                                        child: Text(
+                                      state[index].busstopid.toString(),
+                                      style: Constant.busStopTitleRedStyle,
+                                    )),
+                                  ),
+                                ),
+                                title: Text(
+                                  state[index].name,
+                                  style: Constant.busStopTitleStyle,
+                                ),
+                                trailing: const Icon(
+                                  Icons.arrow_right,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            title: Text(
-                              state[index].name,
-                              style: Constant.busStopTitleStyle,
-                            ),
-                            trailing: const Icon(
-                              Icons.arrow_right,
-                              color: Colors.white,
-                            ),
+                            ],
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
