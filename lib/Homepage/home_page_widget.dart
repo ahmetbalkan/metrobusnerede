@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/Material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive/hive.dart';
@@ -21,7 +22,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  late final LocalNotificationService service;
+  LocalNotificationService service = LocalNotificationService();
   final locationRepository = locator.get<LocationRepository>();
   BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
@@ -29,17 +30,18 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    service = LocalNotificationService();
+
     MobileAds.instance.initialize();
     service.intialize();
     super.initState();
-    // _createBannerAd();
-    //_createinterAd();
+    _createBannerAd();
+    _createinterAd();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+
     super.dispose();
   }
 
@@ -65,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     Future.delayed(
         Duration.zero, () => locationRepository.showWayDialog(context));
 
-    //Future.delayed(Duration(seconds: 1), () => _showInterstetialAd());
+    Future.delayed(Duration(seconds: 1), () => _showInterstetialAd());
 
     return Container(
       color: backgroundColor,
@@ -108,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               ),
             ],
           ),
-          /* bottomNavigationBar: _bannerAd == null
+          /*bottomNavigationBar: _bannerAd == null
               ? Container()
               : Container(
                   margin: EdgeInsets.only(bottom: 12),

@@ -53,7 +53,6 @@ class AlarmList extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
                             children: [
-                              Text("test"),
                               ListTile(
                                 onTap: () {
                                   context

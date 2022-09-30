@@ -55,7 +55,6 @@ class LivelocationBloc extends Bloc<LivelocationEvent, LivelocationState> {
         activityType: ActivityType.automotiveNavigation,
         distanceFilter: 5,
         pauseLocationUpdatesAutomatically: true,
-        // Only set to true if our app will be started up in the background.
         showBackgroundLocationIndicator: false,
       );
     } else {
