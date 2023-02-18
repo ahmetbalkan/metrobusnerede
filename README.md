@@ -1,6 +1,6 @@
 Merhaba,
 
-Telefona gelen smsleri firebase yazmamızı sağlayan uygulamam.
+Metrobüs hattı üzerindeki duraklara yakınlığınızı görebiliceğiniz ve alarm kurarak bildirim alabiliceğiniz uygulamamı açık kaynak olarak sizinle paylaşıyorum.
 
 | İzin | Ana Sayfa | Sms Dinleme | Firebase |
 | --- | --- | --- | --- |
