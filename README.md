@@ -1,16 +1,10 @@
-# metrobusnerede
+Merhaba,
 
-A new Flutter project.
+Telefona gelen smsleri firebase yazmamızı sağlayan uygulamam.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| İzin | Ana Sayfa | Sms Dinleme | Firebase |
+| --- | --- | --- | --- |
+| <img src="https://live.staticflickr.com/65535/52695679751_89474f301a_k.jpg" width="200"> |  <img src="https://live.staticflickr.com/65535/52695941849_4838b7d255_k.jpg" width="200">|<img src="https://live.staticflickr.com/65535/52695679796_66fa5dfa41_k.jpg" width="200"> |  <img src="https://live.staticflickr.com/65535/52696169738_eddca77907_k.jpg" width="200">|
+| İzin | Ana Sayfa | Sms Dinleme | Firebase |
+| --- | --- | --- | --- |
+| <img src="https://live.staticflickr.com/65535/52695679751_89474f301a_k.jpg" width="200"> |  <img src="https://live.staticflickr.com/65535/52695941849_4838b7d255_k.jpg" width="200">|<img src="https://live.staticflickr.com/65535/52695679796_66fa5dfa41_k.jpg" width="200"> |  <img src="https://live.staticflickr.com/65535/52696169738_eddca77907_k.jpg" width="200">|
